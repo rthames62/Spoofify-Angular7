@@ -1,0 +1,247 @@
+/*
+    Standard SCSS Mixins -- Created by: Ryan Thames
+    Github -- http://www.github.com/rthames62
+*/
+
+/* Browser Specifit Mixins */
+
+@mixin specific-browser($browser) {
+    @if $browser == ie {
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { @content;}
+    }
+}
+
+/* Responsive Mixins */
+
+@mixin breakpoint($class){
+    @if $class == xxs {
+        @media (max-width: 500px){ @content; }
+    }
+    
+    @else if $class == xs {
+        @media (max-width: 767px){ @content; }
+    }
+
+    @else if $class == sm {
+        @media (min-width: 768px) { @content; }
+    }
+
+    @else if $class == md {
+        @media (min-width: 992px) { @content; }
+    }
+
+    @else if $class == lg {
+        @media (min-width: 1200px) { @content; }
+    }
+
+    @else if $class == sm-only {
+        @media (min-width: 768px) and (max-width: 992px) { @content; }
+    }
+
+    @else if $class == md-only {
+        @media (min-width: 992px) and (max-width: 1200px) { @content; }
+    }
+
+    @else if $class == dashboard-lg {
+        @media (max-width: 1280px) { @content; }
+    }
+
+    @else if $class == dashboard-lg-fix {
+        @media (min-width: 1280px) and (max-width: 1360px) { @content; }
+    }
+
+    @else {
+        @warn "Breakpoin mixin supports: xs, sm, md, lg, sm-only, md-only, dashboard-lg, dashboard-lg-fix";
+    }
+}
+
+@mixin height-breakpoint($size) {
+    @media (max-height: $size) { @content; }
+}
+
+/* Pixel to Rem converter. Font size mixin provides px fallback. */
+
+@function rem($size){
+    $remSize: $size / 16px;
+    @return $remSize * 1rem;
+}
+
+@mixin font-size($size){
+    font-size: $size;
+    font-size: calculateRem($size);
+}
+
+
+
+/* Auto center a blocked element */
+
+@mixin push-auto {
+    margin: {
+        left: auto;
+        right: auto;
+    }
+}
+
+/* Pseudo helper for ::before and ::after */
+
+@mixin pseudo($display: block, $pos: absolute, $content: ''){
+    content: $content;
+    display: $display;
+    position: $pos;
+}
+
+/* Opacity mixin for cross browser functionality */
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+/* Standard clearfix */
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+/* Vendor prefixes for cross browser support  */
+
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }  
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }  
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};      
+}
+
+@mixin animation-delay($value){
+  -o-animation-delay: $value;
+  -moz-animation-delay: $value;
+  -webkit-animation-delay: $value;
+  animation-delay: $value;
+}
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin transform($value) {
+  -o-transform: $value;
+  -ms-transform: $value;
+  -webkit-transform: $value;
+  transform: $value;
+}
+
+@mixin transform-origin ($value) {
+  -o-transform-origin: $value;
+  -ms-transform-origin: $value;
+  -webkit-transform-origin: $value;
+  transform-origin: $value;
+}
+
+@mixin input-placeholder {
+    &.placeholder { @content; }
+    &:-moz-placeholder { @content; }
+    &::-moz-placeholder { @content; }
+    &:-ms-input-placeholder { @content; }
+    &::-webkit-input-placeholder { @content; }
+}
+
+@mixin box-sizing($value...){
+  -webkit-box-sizing: $value;
+  -moz-box-sizing: $value;
+  box-sizing: $value;
+}
+
+@mixin box-shadow($value){
+  -webkit-box-shadow: $value;
+  -moz-box-shadow: $value;
+  box-shadow: $value;
+}
+
+@mixin border-radius($value){
+  -moz-border-radius: $value;
+  -webkit--radius: $value;
+  border-radius: $value;
+}
+
+@mixin background-size($value){
+  -o-background-size: $value;
+  -webkit-background-size: $value;
+  -moz-background-size: $value;
+  background-size: $value;
+}
+
+@mixin background-gradient($x, $y, $z){
+    background: linear-gradient($x, $y, $z);
+    background: -o-linear-gradient($x, $y, $z);
+    background: -moz-linear-gradient($x, $y, $z);
+    background: -webkit-linear-gradient($x, $y, $z);
+    background: -ms-linear-gradient($x, $y, $z);
+  }
+
+@mixin linear-gradient($angle,$gradient1, $gradient2) {
+//   background-color: $gradient2; /* Fallback Color */
+  background-image: -webkit-gradient(linear, $angle, from($gradient1), to($gradient2)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient($angle, $gradient1, $gradient2); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient($angle, $gradient1, $gradient2); /* FF3.6 */
+  background-image:     -ms-linear-gradient($angle, $gradient1, $gradient2); /* IE10 */
+  background-image:      -o-linear-gradient($angle, $gradient1, $gradient2); /* Opera 11.10+ */
+  background-image:         linear-gradient($angle, $gradient1, $gradient2);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=$angle,StartColorStr='#{$gradient1}', EndColorStr='#{$gradient2}');
+}
+
+@mixin filter($value){
+  -o-filter: $value;
+  -ms-filter: $value;
+  -webkit-filter: $value;
+  -moz-filter: $value;
+  filter: $value;
+}
+
+@mixin appearance($value){
+  -moz-appearance: $value;
+  -webkit-appearance: $value;
+  appearance: $value;
+}
+
+@mixin user-select($value){
+  -webkit-touch-callout: $value;
+  -webkit-user-select: $value;
+  -khtml-user-select: $value;
+  -moz-user-select: $value;
+  -ms-user-select: $value;
+  user-select: $value;
+}
+
+@mixin min-height($value){
+    min-height: $value;
+    height: auto !important;
+    height: $value;
+}

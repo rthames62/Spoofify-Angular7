@@ -1,0 +1,139 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "Spoofify": {
+      "root": "",
+      "sourceRoot": "public/src",
+      "projectType": "application",
+      "prefix": "sc",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/Spoofify",
+            "index": "public/src/index.html",
+            "main": "public/src/main.ts",
+            "polyfills": "public/src/polyfills.ts",
+            "tsConfig": "public/src/tsconfig.app.json",
+            "assets": [
+              "public/src/favicon.ico",
+              "public/src/assets"
+            ],
+            "styles": [
+              "public/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "public/src/environments/environment.ts",
+                  "with": "public/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "Spoofify:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "Spoofify:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "Spoofify:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "public/src/test.ts",
+            "polyfills": "public/src/polyfills.ts",
+            "tsConfig": "public/src/tsconfig.spec.json",
+            "karmaConfig": "public/src/karma.conf.js",
+            "styles": [
+              "public/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "public/src/favicon.ico",
+              "public/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "public/src/tsconfig.app.json",
+              "public/src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "Spoofify-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "Spoofify:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "Spoofify:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "Spoofify"
+}
