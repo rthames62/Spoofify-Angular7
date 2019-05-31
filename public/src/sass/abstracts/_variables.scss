@@ -1,0 +1,31 @@
+@import 'mixins.scss';
+
+$white: #FFF;
+$black: #000;
+
+/* Brand Colors */
+$color-main: #121212;
+$color-main-semi-light: #181818;
+$color-main-light: #282828;
+$color-accent: #1ED761;
+$color-accent-dark: #1DB955;
+$color-accent-secondary: #4687D6;
+$color-neutral: #B3B3B3;
+$color-error: red;
+
+/* Style Properties */
+$weight-bold: 700;
+$weight-semi-bold: 600;
+$weight-medium: 600;
+$weight-regular: 400;
+$weight-light: 300;
+
+/* Padding */
+$padding-sm: rem(5px);
+$padding-md: rem(10px);
+$padding-lg: rem(15px);
+
+/* Margin */
+$margin-sm: rem(5px);
+$margin-md: rem(10px);
+$margin-lg: rem(15px);

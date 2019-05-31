@@ -1,0 +1,10 @@
+@import '../../sass/output.scss';
+
+.playback {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: rem(100px);
+    background: $color-main-light;
+}

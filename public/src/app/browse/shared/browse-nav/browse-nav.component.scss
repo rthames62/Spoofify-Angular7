@@ -1,0 +1,33 @@
+@import '../../../../sass/output.scss';
+
+nav.browse {
+    @include flex();
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px 0 50px;
+
+    a {
+        position: relative;
+        padding: 0 20px;
+        margin-bottom: 20px;
+        color: $white;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &.active {
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+                right: 0;
+                background: $color-accent;
+                width: 30px;
+                height: 2px;
+                margin: auto;
+            }
+        }
+    }
+}

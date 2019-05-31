@@ -1,0 +1,56 @@
+@import '../../sass/output.scss';
+
+.sidebar-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: $color-main;
+    width: rem(230px);
+    height: calc(100% - 100px);
+    padding: 40px 20px 20px;
+    color: $color-neutral;
+}
+
+.main-links {
+
+}
+
+.link-wrapper {
+    @include flex();
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    position: relative;
+
+    .icon {
+        display: flex;
+        justify-content: center;
+        width: 30px;
+
+        &> i {
+            font-size: 22px;
+        }
+    }
+
+    .link {
+        margin-left: 20px;
+        font-weight: $weight-medium;
+    }
+
+    &:hover {
+        color: $white;
+    }
+
+    &.active {
+        color: $white;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            height: 100%;
+            width: 4px;
+            background: $color-accent;
+        }
+    }
+}

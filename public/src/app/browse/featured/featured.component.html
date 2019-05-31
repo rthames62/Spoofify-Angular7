@@ -1,0 +1,21 @@
+<sc-browse-nav></sc-browse-nav>
+<section>
+  <header class="header">
+    <h1>{{ featuredPlaylists?.message }}</h1>
+    <div>
+        <a class="section__cta">View More</a>
+    </div>
+  </header>
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-3 col-md-4" *ngFor="let playlist of featuredPlaylists.playlists.items | slice:0:8">
+            <a routerLink="/playlist/{{ playlist.id }}">
+                <article class="playlist__wrapper">
+                    <img [src]="playlist.images[0].url">
+                    <p class="title">{{ playlist.name }}</p>
+                </article>
+            </a>
+          </div>
+      </div>
+  </div>
+</section>

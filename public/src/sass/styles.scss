@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import './base/reset';
+@import "~bootstrap/scss/mixins/grid-framework";
+@import "~bootstrap/scss/mixins/grid";
+@import './output.scss';
+@import './base/fonts';
+
+body {
+    background: $color-main-semi-light;
+    color: $white;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: $weight-bold;
+}
+
+p, a, span {
+    font-size: 14px;
+}
+
+a {
+    color: $white;
+    text-decoration: none;
+
+    &:hover {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    &.section__cta {
+        color: $color-neutral;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: $weight-regular;
+    }
+}
+
+.flex__wrapper {
+    @include flex();
+    flex-wrap: wrap;
+}
+
+.container-fluid {
+    padding: 0;
+}

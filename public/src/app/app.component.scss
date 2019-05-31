@@ -1,0 +1,9 @@
+@import '../sass/output.scss';
+
+main {
+    height: calc(100vh - 100px);
+    overflow-x: visible;
+    overflow-y: auto;
+    margin-left: 230px;
+    padding: 25px 40px;
+}
