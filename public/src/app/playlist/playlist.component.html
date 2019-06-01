@@ -1,0 +1,11 @@
+<section class="playlist-wrapper">
+  <header class="playlist-header">
+    <img class="cover-art shadow medium" [src]="playlist.images[0].url">
+    <div class="playlist-info">
+      <h1>{{ playlist.name }}</h1>
+      <p>By {{ playlist.owner.display_name }}</p>
+      <div class="songs-amount">{{ playlist.tracks.items.length }} songs</div>
+    </div>
+  </header>
+  <sc-tracks-list [tracks]="playlist.tracks.items"></sc-tracks-list>
+</section>

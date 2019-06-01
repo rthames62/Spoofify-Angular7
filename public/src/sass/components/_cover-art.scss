@@ -1,0 +1,21 @@
+.cover-art {
+
+    &.shadow {
+        @include box-shadow(0 0 10px rgba(0, 0, 0, .1))
+    }
+
+    &.small {
+        width: 100px;
+        height: 100px;
+    }
+
+    &.medium {
+        width: 160px;
+        height: 160px;
+    }
+
+    &.large {
+        width: 240px;
+        height: 240px;
+    }
+}

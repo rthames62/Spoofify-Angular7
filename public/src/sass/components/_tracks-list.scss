@@ -1,0 +1,14 @@
+@import '../output.scss';
+
+.tracks-wrapper {
+    margin-top: 20px;
+}
+
+.track {
+    padding: 15px 10px 15px 40px;
+    @include transition(.2s ease background-color);
+
+    &:hover {
+        background-color: rgba($black, .4);
+    }
+}

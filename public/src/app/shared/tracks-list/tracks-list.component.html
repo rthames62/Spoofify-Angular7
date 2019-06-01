@@ -1,0 +1,23 @@
+<div class="tracks-wrapper">
+  <article class="track" *ngFor="let track of tracks">
+    <div class="play-icons">
+        <i class="fas fa-music"></i>
+        <i class="fas fa-play"></i>
+    </div>
+    <div class="track-info">
+      <div class="song">{{ track.track.name }}</div>
+      <div class="artist">
+        <a>
+          <ng-container *ngFor="let artist of track.track.artists; let last = last;">
+            {{ artist.name }}<ng-container *ngIf="!last">, </ng-container>
+          </ng-container>
+        </a>
+        <span class="line-seperator">•</span>
+        <a>{{ track.track.album.name }}</a>
+      </div>
+    </div>
+    <div class="duration">
+      {{ convertDuration(track.track.duration_ms) }}
+    </div>
+  </article>
+</div>

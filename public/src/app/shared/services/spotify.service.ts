@@ -31,4 +31,10 @@ export class SpotifyConnectService {
       map((recommendations: any) => JSON.parse(recommendations._body))
     )
   }
+
+  getPlaylistById(id: string): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/playlist/${id}`).pipe(
+      map((recommendations: any) => JSON.parse(recommendations._body))
+    )
+  }
 }

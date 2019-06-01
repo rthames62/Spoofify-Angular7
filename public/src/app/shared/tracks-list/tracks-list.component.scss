@@ -1,0 +1,45 @@
+@import '../../../sass/output.scss';
+
+.tracks-wrapper {
+    margin-top: 20px;
+}
+
+.track {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 15px 10px 15px 40px;
+    @include transition(.2s ease background-color);
+
+    &:hover {
+        background-color: rgba($black, .2);
+
+        .fa-play {
+            opacity: 1;
+        }
+
+        .fa-music {
+            opacity: 0;
+            @include transition(.2s ease opacity);
+        }
+    }
+}
+
+.play-icons {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+
+    i {
+        position: absolute;
+        font-size: 13px;
+        color: $color-neutral;
+    }
+
+    .fa-play {
+        color: $white;
+        opacity: 0;
+        @include transition(.2s ease opacity);
+    }
+}

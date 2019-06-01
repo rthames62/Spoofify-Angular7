@@ -17,6 +17,13 @@ const routes: Routes = [
       preload: false
     }
   },
+  {
+    path: 'playlist',
+    loadChildren: './playlist/playlist.module#PlaylistModule',
+    data: {
+      preload: false
+    }
+  },
   { path: '', redirectTo: 'browse/featured', pathMatch: 'full' }
 ]
 

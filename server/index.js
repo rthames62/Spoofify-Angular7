@@ -10,6 +10,7 @@ spotifyController.authorizeSpotify();
 
 app.get('/api/spotify/categories', spotifyController.getCategories);
 app.get('/api/spotify/featured-playlists', spotifyController.getFeaturedPlaylists);
-app.get('/api/spotify/recommendations', spotifyController.getRecommendations); 
+app.get('/api/spotify/recommendations', spotifyController.getRecommendations);
+app.get('/api/spotify/playlist/:id', spotifyController.getPlaylistById) 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`));

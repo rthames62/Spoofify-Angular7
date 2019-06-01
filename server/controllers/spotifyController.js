@@ -57,9 +57,20 @@ const getRecommendations = (req, res) => {
     })
 }
 
+const getPlaylistById = (req, res) => {
+    request.get(`${baseUri}/playlists/${req.params.id}`, authHeaders, (err, response, body) => {
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(err);
+        }
+    })
+}
+
 module.exports = {
     authorizeSpotify: authorizeSpotify,
     getCategories: getCategories,
     getFeaturedPlaylists: getFeaturedPlaylists,
-    getRecommendations: getRecommendations
+    getRecommendations: getRecommendations,
+    getPlaylistById: getPlaylistById
 }
