@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyConnectService } from 'src/app/shared/services/spotify.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'sc-featured',
@@ -10,12 +11,10 @@ export class FeaturedComponent implements OnInit {
 
   featuredPlaylists;
 
-  constructor(private spotifyService: SpotifyConnectService) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.spotifyService.getFeaturedPlaylists().subscribe(playlist => {
-      this.featuredPlaylists = playlist;
-    })
+    this.route.data.subscribe(data => this.featuredPlaylists = data.playlists);
   }
 
 }

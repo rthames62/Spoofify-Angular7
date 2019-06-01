@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlaylistComponent } from './playlist.component';
 import { RouterModule } from '@angular/router';
-import { PlaylistResolverService } from '../shared/services/resolvers/playlist-resolver.service';
+import { PlaylistResolverService } from './resolver/playlist-resolver.service';
 import { TracksListModule } from '../shared/tracks-list/tracks-list.module';
 
 @NgModule({

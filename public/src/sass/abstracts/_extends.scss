@@ -1,0 +1,9 @@
+.dim-link {
+    @include dim-text;
+    @include transition(.2s ease opacity);
+
+    &:hover {
+        opacity: 1;
+        text-decoration: none;
+    }
+}

@@ -24,6 +24,13 @@ const routes: Routes = [
       preload: false
     }
   },
+  {
+    path: 'artist',
+    loadChildren: './artist/artist.module#ArtistModule',
+    data: {
+      preload: false
+    }
+  },
   { path: '', redirectTo: 'browse/featured', pathMatch: 'full' }
 ]
 

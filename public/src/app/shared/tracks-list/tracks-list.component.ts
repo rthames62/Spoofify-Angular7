@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UtilsService } from '../services/core/utils.service';
+import { convertMillisecondsToMinutes } from "../core/utils";
+import { NowPlayingService } from '../services/now-playing.service';
+import { Track } from '../types/spotify-types';
 
 @Component({
   selector: 'sc-tracks-list',
@@ -10,13 +12,17 @@ export class TracksListComponent implements OnInit {
 
   @Input('tracks') tracks;
 
-  constructor(private utils: UtilsService) { }
+  constructor(private nowPlayingService: NowPlayingService) { }
 
   ngOnInit() {
-    
+    console.log('xxxxxxxx', this.tracks);
+  }
+
+  updateNowPlaying(track: Track): void {
+    this.nowPlayingService.updateNowPlaying(track, this.tracks);
   }
 
   convertDuration(millis: number): string {
-    return this.utils.convertMillisecondsToMinutes(millis);
+    return convertMillisecondsToMinutes(millis);
   }
 }

@@ -1,7 +1,12 @@
-.cover-art {
+.cover_art {
 
     &.shadow {
         @include box-shadow(0 0 10px rgba(0, 0, 0, .1))
+    }
+
+    &.xs {
+        width: 50px;
+        height: 50px;
     }
 
     &.small {

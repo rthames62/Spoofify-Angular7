@@ -9,7 +9,8 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 15px 10px 15px 40px;
+    height: 65px;
+    padding: 0 10px 0 40px;
     @include transition(.2s ease background-color);
 
     &:hover {
@@ -24,6 +25,53 @@
             @include transition(.2s ease opacity);
         }
     }
+
+    &__info {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    &__name {
+        font-size: 15px;
+        letter-spacing: .5px;
+        margin-bottom: 8px;
+        color: $white;
+    }
+
+    &__artist {
+        display: flex;
+        align-items: center;
+        line-height: 15px;
+
+        a {
+            @include dim-text;
+            @include transition(.2s linear opacity);
+
+            &:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__explicit_label {
+        font-size: 11px;
+        line-height: 16px;
+        letter-spacing: .3px;
+        display: inline-block;
+        text-transform: uppercase;
+        background-color: rgba($white, .8);
+        font-weight: $weight-light;
+        color: #000;
+        border-radius: 2px;
+        padding: 0 5px;
+        margin-right: 5px;
+    }
+
+    &__duration {
+        width: 60px;
+        text-align: right;
+    }
 }
 
 .play-icons {
@@ -33,7 +81,7 @@
 
     i {
         position: absolute;
-        font-size: 13px;
+        font-size: 12px;
         color: $color-neutral;
     }
 

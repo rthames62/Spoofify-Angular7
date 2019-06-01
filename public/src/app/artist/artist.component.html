@@ -1,0 +1,43 @@
+<header [ngStyle]="artistImage" class="artist_header">
+  <span class="artist_header__followers">{{ artist.followers.total | number }} Monthly Listeners</span>
+  <h1 class="artist_header__name large">{{ artist.name }}</h1>
+  <div class="artist_header__controls">
+    <button class="play">Play</button>
+  </div>
+  <nav class="artist_header__nav">
+    <ol>
+      <li>
+        <div>
+            <a 
+              routerLink="/artist/{{ artist.id }}" 
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              Overview
+            </a>
+        </div>
+      </li>
+      <li>
+        <div>
+            <a 
+              routerLink="/artist/{{ artist.id }}/related" 
+              routerLinkActive="active">
+              Related Artists
+            </a>
+        </div>
+      </li>
+      <li>
+        <div>
+            <a 
+              routerLink="/artist/{{ artist.id }}/about" 
+              routerLinkActive="active">
+              About
+            </a>
+        </div>
+      </li>
+    </ol>
+  </nav>
+</header>
+<section class="artist_content">
+  <h1>Popular</h1>
+  <sc-tracks-list *ngIf="topTracks" [tracks]="topTracks.tracks"></sc-tracks-list>
+</section>

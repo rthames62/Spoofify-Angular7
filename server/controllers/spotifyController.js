@@ -67,10 +67,44 @@ const getPlaylistById = (req, res) => {
     })
 }
 
+const getArtistById = (req, res) => {
+    request.get(`${baseUri}/artists/${req.params.id}`, authHeaders, (err, response, body) => {
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(err);
+        }
+    })
+}
+
+const getArtistAlbums = (req, res) => {
+    request.get(`${baseUri}/artists/${req.params.id}/albums`, authHeaders, (err, response, body) => {
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(err);
+        }
+    })
+}
+
+const getArtistTopTracks = (req, res) => {
+    request.get(`${baseUri}/artists/${req.params.id}/top-tracks?country=us`, authHeaders, (err, response, body) => {
+        console.log(response.statusCode)
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(response);
+        }
+    })
+}
+
 module.exports = {
     authorizeSpotify: authorizeSpotify,
     getCategories: getCategories,
     getFeaturedPlaylists: getFeaturedPlaylists,
     getRecommendations: getRecommendations,
-    getPlaylistById: getPlaylistById
+    getPlaylistById: getPlaylistById,
+    getArtistById: getArtistById,
+    getArtistTopTracks: getArtistTopTracks,
+    getArtistAlbums: getArtistAlbums
 }

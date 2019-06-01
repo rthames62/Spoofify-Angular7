@@ -1,10 +1,39 @@
 @import '../../sass/output.scss';
+@import '../../sass/components/cover-art';
 
 .playback {
+    display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: rem(100px);
+    min-width: 650px;
+    height: rem(90px);
     background: $color-main-light;
+    border-top: 1px solid $black;
+    padding: 0 15px;
+}
+
+.now_playing {
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    &__album_info, &__player_controls {
+        width: 30%;
+    }
+
+    &__album_info {
+        display: flex;
+        align-items: center;
+
+        .cover_art {
+            background: $color-neutral;
+            margin-right: 10px;
+        }
+    }
+
+    &__track_controls {
+        width: 40%;
+    }
 }

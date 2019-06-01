@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { SpotifyConnectService } from '../shared/services/spotify.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NowPlayingService } from '../shared/services/now-playing.service';
+import { Playlist, Track } from '../shared/types/spotify-types';
+import { MainBackgroundService } from '../shared/services/main-background.service';
 
 @Component({
   selector: 'sc-playlist',
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.scss']
 })
-export class PlaylistComponent implements OnInit {
+export class PlaylistComponent implements OnInit, OnDestroy {
 
-  playlist;
+  playlist: Playlist;
 
-  constructor(private spotify: SpotifyConnectService,
-    private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+    private nowPlaying: NowPlayingService,
+    private backgroundService: MainBackgroundService) {
 
   }
 
@@ -23,4 +26,11 @@ export class PlaylistComponent implements OnInit {
     })
   }
 
+  ngOnDestroy() {
+    this.backgroundService.updateBackgroundColor(this.backgroundService.defaultColor);
+  }
+
+  updateNowPlaying(track: Track): void {
+    this.nowPlaying.updateNowPlaying(track, this.playlist.tracks.items);
+  }
 }

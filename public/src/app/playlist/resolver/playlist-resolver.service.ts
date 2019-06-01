@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, RouterStateSnapshot, Router, ResolveData } from '@angular/router';
-import { SpotifyConnectService } from '../spotify.service';
+import { SpotifyConnectService } from '../../shared/services/spotify.service';
 import { take, mergeMap } from 'rxjs/operators';
 import { of, EMPTY } from 'rxjs';
 

@@ -1,15 +1,42 @@
 @import '../../sass/output.scss';
 @import '../../sass/components/cover-art';
 @import '../../sass/components/tracks-list';
+@import '../../sass/components/buttons';
 
-.playlist-header {
+.playlist_header {
     display: flex;
     padding-bottom: 30px;
     border-bottom: 1px solid rgba($color-neutral, .2);
+
+    &__by {
+        @include dim-text;
+    }
+
+    &__owner {
+        color: $white;
+    }
+
+    &__description {
+        @include dim-text;
+        margin-bottom: 10px;
+    }
+
+    &__amount {
+        @include dim-text;
+        font-size: 11px;
+        line-height: 16px;
+        font-weight: $weight-light;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+    }
+
+    &__controls {
+        margin-top: 20px;
+    }
 }
 
-.cover-art {
-    margin-right: 15px;
+.cover_art {
+    margin-right: 30px;
 
     img {
         width: 150px;
@@ -17,6 +44,6 @@
     }
 }
 
-.playlist-info {
+.playlist_info {
 
 }

@@ -1,3 +1,21 @@
-<section class="playback">
-  
-</section>
+<footer class="playback">
+  <div class="now_playing">
+    <div *ngIf="nowPlaying" class="now_playing__album_info">
+        <img class="cover_art xs" [src]="nowPlaying.track.track.album.images[0].url" />
+        <div class="currently_playing_info">
+            <div class="currently_playing_track_name">
+                {{ nowPlaying.track.track.name }}
+            </div>
+            <div class="currently_playing_artist_name">
+                
+            </div>
+        </div>
+    </div>
+    <div class="now_playing__track_controls">
+
+    </div>
+    <div class="now_playing__player_controls">
+
+    </div>
+  </div>
+</footer>

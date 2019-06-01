@@ -128,12 +128,6 @@
     }
 }
 
-@mixin flex() {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 @mixin animation($str) {
   -webkit-animation: #{$str};
   -moz-animation: #{$str};
@@ -250,4 +244,29 @@
     min-height: $value;
     height: auto !important;
     height: $value;
+}
+
+/* Insclusions */
+
+@mixin flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin dim-text {
+  color: $white;
+  opacity: .6
+}
+
+@mixin active-link {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    background: $color-accent;
+    width: 30px;
+    height: 2px;
+    margin: auto;
 }

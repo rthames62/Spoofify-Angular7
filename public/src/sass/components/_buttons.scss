@@ -1,0 +1,24 @@
+@import '../output.scss';
+
+button {
+    @include border-radius(500px);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $white;
+    border: none;
+    min-width: 130px;
+
+    &:hover {
+        @include transform(scale(1.06));
+    }
+
+    &.play {
+        background: $color-accent-dark;
+        padding: 15px 50px;
+
+        &:hover {
+            background: $color-accent;
+        }
+    }
+}

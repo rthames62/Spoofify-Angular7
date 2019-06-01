@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NowPlayingService, NowPlaying } from '../shared/services/now-playing.service';
 
 @Component({
   selector: 'sc-playback',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaybackComponent implements OnInit {
 
-  constructor() { }
+  nowPlaying: NowPlaying;
+
+  constructor(private nowPlayingService: NowPlayingService) { }
 
   ngOnInit() {
+    this.nowPlayingService.nowPlaying$.subscribe((nowPlaying: NowPlaying) => {
+      console.log(nowPlaying);
+      this.nowPlaying = nowPlaying;
+    })
   }
 
 }
