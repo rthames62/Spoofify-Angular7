@@ -1,4 +1,5 @@
 @import '../../../sass/output.scss';
+@import '../../../sass/components/cover-art';
 
 .tracks-wrapper {
     margin-top: 20px;
@@ -16,11 +17,11 @@
     &:hover {
         background-color: rgba($black, .2);
 
-        .fa-play {
+        .play_controls_icons {
             opacity: 1;
         }
 
-        .fa-music {
+        .fa-music, .fa-volume-up {
             opacity: 0;
             @include transition(.2s ease opacity);
         }
@@ -33,9 +34,13 @@
 
     &__name {
         font-size: 15px;
+        line-height: 24px;
         letter-spacing: .5px;
-        margin-bottom: 8px;
         color: $white;
+    }
+
+    &__icons {
+
     }
 
     &__artist {
@@ -72,20 +77,32 @@
         width: 60px;
         text-align: right;
     }
+
+    &__cover_art_wrapper {
+        margin-right: 10px;
+    }
+
+    &.currently-playing {
+        .track__name, .track__duration, .play_controls_icons, .track__icons {
+            color: $color-accent;
+        }
+    }
 }
 
 .play-icons {
+    display: flex;
+    align-items: center;
     position: absolute;
     left: 12px;
-    top: 12px;
+    height: 100%;
 
     i {
         position: absolute;
-        font-size: 12px;
+        font-size: 14px;
         color: $color-neutral;
     }
 
-    .fa-play {
+    .play_controls_icons {
         color: $white;
         opacity: 0;
         @include transition(.2s ease opacity);

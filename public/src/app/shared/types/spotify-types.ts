@@ -1,5 +1,3 @@
-import { url } from 'inspector';
-
 export interface Artist {
     href: string,
     id: string,

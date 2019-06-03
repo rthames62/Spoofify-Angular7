@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PlaybackComponent } from './playback.component';
+import { AlbumPreviewComponent } from './album-preview.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [ PlaybackComponent ],
+  declarations: [ AlbumPreviewComponent ],
   imports: [
     CommonModule,
     RouterModule
   ],
-  exports: [ PlaybackComponent ]
+  exports: [ AlbumPreviewComponent ]
 })
-export class PlaybackModule { }
+export class AlbumPreviewModule { }

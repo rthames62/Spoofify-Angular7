@@ -78,7 +78,37 @@ const getArtistById = (req, res) => {
 }
 
 const getArtistAlbums = (req, res) => {
-    request.get(`${baseUri}/artists/${req.params.id}/albums`, authHeaders, (err, response, body) => {
+    request.get(`${baseUri}/artists/${req.params.id}/albums?market=US`, authHeaders, (err, response, body) => {
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(err);
+        }
+    })
+}
+
+const getArtistSingles = (req, res) => {
+    request.get(`${baseUri}/artists/${req.params.id}/albums?market=US&include_groups=single`, authHeaders, (err, response, body) => {
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(err);
+        }
+    })
+}
+
+const getArtistCompilations = (req, res) => {
+    request.get(`${baseUri}/artists/${req.params.id}/albums?market=US&include_groups=compilation`, authHeaders, (err, response, body) => {
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(err);
+        }
+    })
+}
+
+const getArtistAppearsOn = (req, res) => {
+    request.get(`${baseUri}/artists/${req.params.id}/albums?market=US&include_groups=appears_on`, authHeaders, (err, response, body) => {
         if(!err && response.statusCode === 200) {
             res.json(body);
         } else {
@@ -106,5 +136,8 @@ module.exports = {
     getPlaylistById: getPlaylistById,
     getArtistById: getArtistById,
     getArtistTopTracks: getArtistTopTracks,
-    getArtistAlbums: getArtistAlbums
+    getArtistAlbums: getArtistAlbums,
+    getArtistSingles: getArtistSingles,
+    getArtistCompilations: getArtistCompilations,
+    getArtistAppearsOn: getArtistAppearsOn
 }

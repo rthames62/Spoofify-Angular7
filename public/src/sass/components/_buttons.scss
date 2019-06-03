@@ -1,6 +1,7 @@
 @import '../output.scss';
 
 button {
+    @extend .grow;
     @include border-radius(500px);
     font-size: 11px;
     text-transform: uppercase;
@@ -8,17 +9,23 @@ button {
     color: $white;
     border: none;
     min-width: 130px;
+    padding: 15px 50px;
+    cursor: pointer;
 
-    &:hover {
-        @include transform(scale(1.06));
+    &:focus {
+        outline: none;
     }
 
     &.play {
         background: $color-accent-dark;
-        padding: 15px 50px;
 
         &:hover {
             background: $color-accent;
         }
+    }
+
+    &.transparent {
+        background: none;
+        color: $white;
     }
 }

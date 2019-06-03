@@ -1,0 +1,63 @@
+@import '../../../sass/output.scss';
+@import '../../../sass/components/cover-art';
+@import '../../../sass/components/play-controls';
+
+.album_wrapper {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.album {
+
+    &:hover {
+        .cover_art {
+            @include filter(brightness(.3));
+            @include transition(.2s ease filter);
+        }
+
+        .player_controls__play {
+            display: block;
+        }
+    }
+    
+    &__cover_art {
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    &__name_wrapper {
+        @extend .ellipsis_one_line;
+    }
+
+    &__name {
+        color: $white;
+        line-height: 20px;
+        letter-spacing: .2px;
+        font-weight: $weight-medium;
+    }
+
+    &__playback {
+        @extend .flex-all-center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .player_controls__play {
+        display: none;
+    }
+}
+
+.artist {
+
+    &__name {
+        @extend .dim-link;
+        line-height: 24px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

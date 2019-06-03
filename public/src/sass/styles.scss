@@ -22,6 +22,7 @@ h1, h2, h3 {
 
 h1 {
     font-size: 40px;
+    margin: 24px 0;
 
     &.large {
         font-size: 72px;
@@ -71,10 +72,6 @@ a {
     padding: 0 5px;
 }
 
-.ellipsis_one_line {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding-right: 1px;
-    margin-right: -1px;
+.center {
+    text-align: center;
 }

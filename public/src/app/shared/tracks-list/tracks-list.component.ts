@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
 import { convertMillisecondsToMinutes } from "../core/utils";
 import { NowPlayingService } from '../services/now-playing.service';
 import { Track } from '../types/spotify-types';
@@ -8,21 +8,57 @@ import { Track } from '../types/spotify-types';
   templateUrl: './tracks-list.component.html',
   styleUrls: ['./tracks-list.component.scss']
 })
-export class TracksListComponent implements OnInit {
+export class TracksListComponent implements OnInit, OnChanges {
 
   @Input('tracks') tracks;
+  @Input('type') type: 'popular' | 'full-detail' | 'less-detail';
+  tracksList;
+  currentlyPlaying: boolean = false;
 
-  constructor(private nowPlayingService: NowPlayingService) { }
+  constructor(private nowPlayingService: NowPlayingService) {
+    if(!this.type) {
+      this.type = 'full-detail';
+    }
+  }
 
   ngOnInit() {
-    console.log('xxxxxxxx', this.tracks);
+    
+  }
+
+  ngOnChanges(e) {
+    if(e.tracks && e.tracks.currentValue) {
+      this.initTracksList();
+    }
+    this.nowPlayingService.nowPlaying$.subscribe(currentTrack => {
+      this.tracksList.forEach(track => track.currentlyPlaying = track.id === currentTrack.track.id);
+    })
+    this.nowPlayingService.currentlyPlaying$.subscribe(bool => {
+      this.currentlyPlaying = bool;
+      console.log(this.currentlyPlaying);
+    });
   }
 
   updateNowPlaying(track: Track): void {
-    this.nowPlayingService.updateNowPlaying(track, this.tracks);
+    this.nowPlayingService.updateNowPlaying(track, this.tracksList);
   }
 
   convertDuration(millis: number): string {
     return convertMillisecondsToMinutes(millis);
+  }
+
+  convertPlaylistTracks(tracks) {
+    let arr = [];
+    tracks.forEach(x => arr.push(x.track));
+    return arr;
+  }
+
+  pauseTrack(): void {
+    
+  }
+
+  private initTracksList() {
+    this.tracksList = this.tracks[0].track ? this.convertPlaylistTracks(this.tracks) : this.tracks;
+    this.tracksList = this.type === 'popular' ? this.tracksList.slice(0, 5) : this.tracksList;
+    this.tracksList.forEach(track => track.currentlyPlaying = false);
   }
 }

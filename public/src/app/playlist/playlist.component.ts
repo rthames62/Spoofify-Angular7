@@ -21,13 +21,13 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      console.log(data);
       this.playlist = data.playlist;
     })
   }
 
   ngOnDestroy() {
     this.backgroundService.updateBackgroundColor(this.backgroundService.defaultColor);
+    localStorage.removeItem('saved-cover-art');
   }
 
   updateNowPlaying(track: Track): void {

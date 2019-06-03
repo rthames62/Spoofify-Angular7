@@ -246,6 +246,16 @@
     height: $value;
 }
 
+@mixin line-clamp($value){
+  -webkit-line-clamp: $value;
+  line-clamp: $value;
+}
+
+@mixin box-orient($value){
+  -webkit-box-orient: $value;
+  box-orient: $value;
+}
+
 /* Insclusions */
 
 @mixin flex {

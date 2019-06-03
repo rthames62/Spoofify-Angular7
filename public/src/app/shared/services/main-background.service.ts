@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { getAverageRGB, getDataUri, fullColorHex, startDownload } from "../core/utils.js";
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,26 @@ export class MainBackgroundService {
   defaultColor: string = '#383838';
   backgroundColor: BehaviorSubject<string> = new BehaviorSubject<string>(this.defaultColor);
   backgroundColor$: Observable<any> = this.backgroundColor.asObservable();
+  imageUri: string;
 
   constructor() { }
 
-  updateBackgroundColor(hex: string): void {
-    this.backgroundColor.next(hex ? hex : this.defaultColor);
+  updateBackgroundColor(url: string): void {
+    this.getColorFromImage(url);
+  }
+
+  getColorFromImage(url) {
+    startDownload(url);
+    getDataUri(url, (uri) => {
+      const image = new Image(300, 300);
+      image.src = uri;
+      image.crossOrigin = '';
+      setTimeout(() => {
+        const rgb = getAverageRGB(image);
+        const color = fullColorHex(rgb.r, rgb.g, rgb.b);
+        
+        this.backgroundColor.next(url ? color : this.defaultColor);
+      }, 100);
+    });
   }
 }

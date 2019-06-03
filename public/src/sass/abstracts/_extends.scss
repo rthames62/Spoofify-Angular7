@@ -6,4 +6,34 @@
         opacity: 1;
         text-decoration: none;
     }
+
+    &.no-transition {
+        @include transition(none);
+    }
+
+    &.hover-underline {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.flex-all-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grow {
+    &:hover {
+        @include transform(scale(1.06));
+    }
+}
+
+.ellipsis_one_line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 1px;
+    margin-right: -1px;
 }

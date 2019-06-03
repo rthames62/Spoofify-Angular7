@@ -4,12 +4,14 @@ import { ArtistComponent } from './artist.component';
 import { RouterModule } from '@angular/router';
 import { ArtistResolverService } from './resolver/artist-resolver.service';
 import { TracksListModule } from '../shared/tracks-list/tracks-list.module';
+import { AlbumsListModule } from '../shared/albums-list/albums-list.module';
 
 @NgModule({
   declarations: [ ArtistComponent ],
   imports: [
     CommonModule,
     TracksListModule,
+    AlbumsListModule,
     RouterModule.forChild([
       {
         path: ':id',

@@ -15,5 +15,8 @@ app.get('/api/spotify/playlist/:id', spotifyController.getPlaylistById);
 app.get('/api/spotify/artist/:id', spotifyController.getArtistById);
 app.get('/api/spotify/artist/:id/top-tracks', spotifyController.getArtistTopTracks);
 app.get('/api/spotify/artist/:id/albums', spotifyController.getArtistAlbums);
+app.get('/api/spotify/artist/:id/singles', spotifyController.getArtistSingles);
+app.get('/api/spotify/artist/:id/compilations', spotifyController.getArtistCompilations);
+app.get('/api/spotify/artist/:id/appears-on', spotifyController.getArtistAppearsOn);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`));

@@ -18,27 +18,27 @@ export class SpotifyConnectService {
 
   getBrowseCategories(): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/categories`).pipe(
-      map((categories: any) => JSON.parse(categories._body).categories)
+      map((res: any) => JSON.parse(res._body).categories)
     )
   }
 
   getFeaturedPlaylists(): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/featured-playlists`).pipe(
-      map((categories: any) => JSON.parse(categories._body))
+      map((res: any) => JSON.parse(res._body))
     )
   }
 
   getRecommendations(): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/recommendations`).pipe(
-      map((recommendations: any) => JSON.parse(recommendations._body))
+      map((res: any) => JSON.parse(res._body))
     )
   }
 
   getPlaylistById(id: string): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/playlist/${id}`).pipe(
-      map((playlist: any) => {
-        let body = JSON.parse(playlist._body);
-        this.backgroundService.updateBackgroundColor(body.primary_color);
+      map((res: any) => {
+        let body = JSON.parse(res._body);
+        this.backgroundService.updateBackgroundColor(body.images[0].url);
         return body;
       })
     )
@@ -46,19 +46,37 @@ export class SpotifyConnectService {
 
   getArtistById(id: string): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}`).pipe(
-      map((artist: any) => JSON.parse(artist._body))
+      map((res: any) => JSON.parse(res._body))
     )
   }
 
-  getArtistByTopTracks(id: string): Observable<Track[]> {
+  getArtistByTopTracks(id: string): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}/top-tracks`).pipe(
-      map((tracks: any) => JSON.parse(tracks._body))
+      map((res: any) => JSON.parse(res._body))
     )
   }
 
-  getArtistAlbums(id: string): Observable<Album[]> {
+  getArtistAlbums(id: string): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}/albums`).pipe(
-      map((albums: any) => JSON.parse(albums._body))
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
+  getArtistAlbumSingles(id: string): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}/singles`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
+  getArtistAlbumCompilations(id: string): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}/compilations`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
+  getArtistAlbumAppearsOn(id: string): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}/appears-on`).pipe(
+      map((res: any) => JSON.parse(res._body))
     )
   }
 }

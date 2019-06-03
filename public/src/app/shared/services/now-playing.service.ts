@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { Track } from '../types/spotify-types';
 
 export interface NowPlaying {
@@ -14,6 +14,8 @@ export class NowPlayingService {
 
   nowPlaying: Subject<NowPlaying> = new Subject<NowPlaying>();
   nowPlaying$: Observable<any> = this.nowPlaying.asObservable();
+  currentlyPlaying: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  currentlyPlaying$: Observable<any> = this.currentlyPlaying.asObservable();
 
   constructor() { }
 

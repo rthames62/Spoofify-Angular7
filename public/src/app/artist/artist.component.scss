@@ -20,7 +20,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        @include background-gradient(160deg, transparent -30%,#181818);
+        @include background-gradient(180deg, transparent -100%,#181818 100%);
     }
 
     &>* {
@@ -38,6 +38,10 @@
     &__controls {
         position: relative;
         margin-top: 20px;
+    }
+
+    &__name {
+        margin: 10px 0;
     }
 
     &__nav {
@@ -77,8 +81,7 @@
 }
 
 .artist_content {
-    height: 800px;
-    background-color: $color-main;
+    background-color: $color-main-semi-light;
     margin: 0 -40px -25px;
     padding: 20px 40px;
 }

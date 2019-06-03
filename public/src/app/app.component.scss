@@ -4,6 +4,7 @@ main {
     height: calc(100vh - 90px);
     overflow-x: visible;
     overflow-y: scroll;
+    margin-bottom: 90px;
     margin-left: 230px;
     padding: 25px 40px;
     // @include linear-gradient(155deg, rgba(56,56,56,1), rgba(0,0,0,1) 100%);

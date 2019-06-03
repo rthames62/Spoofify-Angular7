@@ -1,20 +1,41 @@
 <footer class="playback">
   <div class="now_playing">
-    <div *ngIf="nowPlaying" class="now_playing__album_info">
-        <img class="cover_art xs" [src]="nowPlaying.track.track.album.images[0].url" />
-        <div class="currently_playing_info">
-            <div class="currently_playing_track_name">
-                {{ nowPlaying.track.track.name }}
+    <div class="now_playing__album_info">
+        <img *ngIf="nowPlaying" class="cover_art xs" [src]="nowPlaying.track.album.images[0].url" />
+        <div *ngIf="nowPlaying" class="currently_playing ellipsis_one_line">
+            <div class="currently_playing__track_name ellipsis_one_line">
+                <a routerLink="/album/{{ nowPlaying.track.album.id }}">{{ nowPlaying.track.name }}</a>
             </div>
-            <div class="currently_playing_artist_name">
-                
+            <div class="currently_playing__artist_name ellipsis_one_line">
+                <a routerLink="/album/{{ nowPlaying.track.album.id }}">{{ nowPlaying.track.artists[0].name }}</a>
             </div>
         </div>
     </div>
-    <div class="now_playing__track_controls">
-
+    <div class="player_controls_wrapper">
+      <div class="player_controls">
+        <div class="player_controls__shuffle">
+            <i class="fas fa-random"></i>
+        </div>
+        <div class="player_controls__previous">
+            <i (click)="playPrevious()" class="fas fa-step-backward"></i>
+        </div>
+        <div class="player_controls__play small">
+            <i (click)="currentlyPlayingFlag ? pause() : play()" class="fas" [ngClass]="currentlyPlayingFlag ? 'fa-pause' : 'fa-play'"></i>
+        </div>
+        <div class="player_controls__next">
+            <i (click)="playNext()" class="fas fa-step-forward"></i>
+        </div>
+        <div class="player_controls__repeat">
+            <i class="fas fa-redo-alt"></i>
+        </div>
+      </div>
+      <div class="playback_bar">
+        <div class="playback_bar__time">{{ currentlyPlayingProgress }}</div>
+        <div class="playback_bar__progress_bar"></div>
+        <div class="playback_bar__time">{{ currentlyPlayingDurationDisplay }}</div>
+      </div>
     </div>
-    <div class="now_playing__player_controls">
+    <div class="now_playing__volume_controls">
 
     </div>
   </div>

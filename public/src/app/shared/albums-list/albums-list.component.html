@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3 col-md-4" *ngFor="let album of albums | slice:0:sliceLength">
+        <sc-album-preview [album]="album"></sc-album-preview>
+    </div>
+  </div>
+  <div *ngIf="sliceLength <= albums.length" class="row justify-content-center">
+    <div class="col center">
+      <button *ngIf="sliceLength === length" (click)="sliceLength = albums.length" class="transparent">Show More <i class="fas fa-chevron-down"></i></button>
+      <button *ngIf="sliceLength === albums.length" (click)="sliceLength = length" class="transparent">Show Less <i class="fas fa-chevron-up"></i></button>
+    </div>
+  </div>
+</div>
