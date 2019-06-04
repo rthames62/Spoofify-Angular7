@@ -2,7 +2,7 @@
     <li class="track" [ngClass]="{ 'currently-playing': track.currentlyPlaying }" *ngFor="let track of tracksList">
       <div class="play-icons">
           <i class="fas track__icons" [ngClass]="currentlyPlaying && track.currentlyPlaying ? 'fa-volume-up' : 'fa-music'"></i>
-          <i (click)="currentlyPlaying ? pauseTrack() : updateNowPlaying(track)" class="fas play_controls_icons" [ngClass]="track.currentlyPlaying ? 'fa-pause' : 'fa-play'"></i>
+          <i (click)="currentlyPlaying && track.currentlyPlaying ? pauseTrack() : updateNowPlaying(track)" class="fas play_controls_icons" [ngClass]="track.currentlyPlaying && currentlyPlaying ? 'fa-pause' : 'fa-play'"></i>
       </div>
       <div *ngIf="type == 'popular' && track.album.images" class="track__cover_art_wrapper">
         <img class="cover_art xs" [src]="track.album.images[0].url">

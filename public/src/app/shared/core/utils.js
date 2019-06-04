@@ -118,3 +118,19 @@ export function imageReceived(cb) {
       console.log("Errorsd d sd: " + err);
     }  
 }
+
+export function getBrowserBreakpoint() {
+    const width = document.body.offsetWidth;
+
+    if(width >= 1200) {
+        return 'xl';
+    } else if(width >= 992) {
+        return 'lg';
+    } else if(width >= 768) {
+        return 'md';
+    } else if(width >= 540) {
+        return 'sm';
+    } else {
+        return 'xs';
+    }
+}

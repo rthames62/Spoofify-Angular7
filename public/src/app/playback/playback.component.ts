@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NowPlayingService, NowPlaying } from '../shared/services/now-playing.service';
 import { convertSecondsToMinutes } from "../shared/core/utils";
-import { Observable, timer } from 'rxjs';
-import { skipWhile, filter, takeUntil } from 'rxjs/operators';
+import { Observable, timer, of, BehaviorSubject, Subject } from 'rxjs';
+import { skipWhile, filter, takeUntil, map } from 'rxjs/operators';
 
 @Component({
   selector: 'sc-playback',
@@ -16,81 +16,93 @@ export class PlaybackComponent implements OnInit {
   currentlyPlayingFlag: boolean = false;
   currentlyPlayingDurationSeconds: number = 0;
   currentlyPlayingDurationDisplay;
-  currentlyPlayingProgressSeconds;
+  currentlyPlayingProgressSeconds: number = 0;
   currentlyPlayingProgress;
   currentlyPlayingProgress$: Observable<any>;
   currentlyPlayingIndex: number;
+  destroyTimer: Subject<boolean> = new Subject<boolean>();
+  destroyTimer$: Observable<any> = this.destroyTimer.asObservable();
+  progressBarTime: number;
+  nextSongTransition: boolean = false;
 
   constructor(private nowPlayingService: NowPlayingService) { }
 
   ngOnInit() {
     this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(0);
     this.currentlyPlayingProgress = convertSecondsToMinutes(0);
+
     this.nowPlayingService.nowPlaying$.subscribe((nowPlaying: NowPlaying) => {
-      this.nowPlaying = nowPlaying;
-      this.nowPlaying.trackList.forEach((track, index) => {
-        if(this.nowPlaying.track.id === track.id) {
-          this.currentlyPlayingIndex = index;
-        }
-      })
       this.currentlyPlayingDurationSeconds = 0;
       this.currentlyPlayingProgressSeconds = 0;
+      this.resetProgressBar();
 
-
-      if(this.currentlyPlayingTrack) {
-        this.currentlyPlayingTrack.pause();
-      }
-
-      if(nowPlaying.track.preview_url) {
-        this.nowPlayingService.currentlyPlaying.next(true);
-        this.currentlyPlayingTrack = new Audio(nowPlaying.track.preview_url);
+      if(nowPlaying.trackList) {
+        this.destroyTimer.next(true);
+        this.nowPlaying = nowPlaying;      
         setTimeout(() => {
-          this.currentlyPlayingTrack.play();
-          this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(this.currentlyPlayingTrack.duration);
-          this.currentlyPlayingProgressSeconds = 0;
-          this.currentlyPlayingDurationSeconds = Math.floor(this.currentlyPlayingTrack.duration);
-          this.currentlyPlayingProgress$ = timer(this.currentlyPlayingTrack.duration, 1000).pipe(
-            filter(val => {
-              return this.currentlyPlayingFlag && this.currentlyPlayingDurationSeconds > 0;
-            })
-          )
-          this.currentlyPlayingProgress$.subscribe(e => {
-            this.currentlyPlayingProgressSeconds++;
-            this.currentlyPlayingDurationSeconds--;
-            this.currentlyPlayingProgress = convertSecondsToMinutes(this.currentlyPlayingProgressSeconds);
-            this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(this.currentlyPlayingDurationSeconds);
-            if(this.currentlyPlayingDurationSeconds === 0) {
-              this.nowPlaying.track = this.nowPlaying.trackList[1];
-              this.playNext();
-            }
-          })
+          const playingDuration = this.nowPlayingService.getPlayingDuration();
+          this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(playingDuration);
+          this.currentlyPlayingDurationSeconds = Math.floor(playingDuration);
+          console.log(this.currentlyPlayingDurationDisplay, this.currentlyPlayingDurationSeconds);
+          this.initTimer();
         }, 200);
+        
       }
     });
-    this.nowPlayingService.currentlyPlaying$.subscribe(bool => this.currentlyPlayingFlag = bool);
+    this.nowPlayingService.currentlyPlaying$.subscribe(bool => {
+      this.currentlyPlayingFlag = bool;
+      console.log(bool);
+      if(!bool) {
+        this.destroyTimer.next(true);
+      }
+      if(this.nowPlaying && bool) {
+        this.initTimer();
+      }
+    });
   }
 
   pause(): void {
-    this.currentlyPlayingTrack.pause();
-    this.nowPlayingService.currentlyPlaying.next(false);
+    this.nowPlayingService.pause();
   }
 
   play(): void {
-    if(this.currentlyPlayingTrack) {
-      this.currentlyPlayingTrack.play();
-      this.nowPlayingService.currentlyPlaying.next(true);
-    }
+    this.nowPlayingService.play();
   }
 
   playNext(): void {
-    if(this.currentlyPlayingIndex < this.nowPlaying.trackList.length - 1) {
-      this.nowPlayingService.updateNowPlaying(this.nowPlaying.trackList[this.currentlyPlayingIndex + 1], this.nowPlaying.trackList);
-    }
+    this.nowPlayingService.playNext();
   }
 
   playPrevious(): void {
-    if(this.currentlyPlayingIndex > 0) {
-      this.nowPlayingService.updateNowPlaying(this.nowPlaying.trackList[this.currentlyPlayingIndex - 1], this.nowPlaying.trackList);
-    }
+    this.nowPlayingService.playPrevious();
+  }
+
+  setTimers(): void {
+    
+  }
+
+  initTimer(): void {
+    const playingDuration = this.nowPlayingService.getPlayingDuration();
+    this.currentlyPlayingProgress$ = timer(playingDuration, 1000).pipe(
+      takeUntil(this.destroyTimer$)
+    )
+    
+    this.currentlyPlayingProgress$.subscribe(e => {
+      this.progressBarTime = (this.currentlyPlayingProgressSeconds === 0 ? 1 : this.currentlyPlayingProgressSeconds) / (playingDuration - 2);
+      this.currentlyPlayingProgressSeconds++;
+      this.currentlyPlayingDurationSeconds--;
+      this.currentlyPlayingProgress = convertSecondsToMinutes(this.currentlyPlayingProgressSeconds);
+      this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(this.currentlyPlayingDurationSeconds);
+      if(this.currentlyPlayingDurationSeconds === 0) {
+        this.resetProgressBar();
+        this.nowPlayingService.playNext();
+      }
+    })
+  }
+
+  resetProgressBar(): void {
+    this.nextSongTransition = true;
+    this.progressBarTime = 0;
+    setTimeout(() => this.nextSongTransition = false, 50);
   }
 }

@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-lg-3 col-md-4" *ngFor="let album of albums | slice:0:sliceLength">
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let album of albums | slice:0:sliceLength">
         <sc-album-preview [album]="album"></sc-album-preview>
     </div>
   </div>

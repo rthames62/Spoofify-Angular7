@@ -31,7 +31,9 @@
       </div>
       <div class="playback_bar">
         <div class="playback_bar__time">{{ currentlyPlayingProgress }}</div>
-        <div class="playback_bar__progress_bar"></div>
+        <div class="playback_bar__progress_bar_wrapper">
+          <div [ngClass]="{ 'no-transition': nextSongTransition }" [style.width.%]="progressBarTime * 100" class="playback_bar__progress_bar"></div>
+        </div>
         <div class="playback_bar__time">{{ currentlyPlayingDurationDisplay }}</div>
       </div>
     </div>
