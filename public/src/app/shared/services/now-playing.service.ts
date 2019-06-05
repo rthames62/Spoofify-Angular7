@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { Track } from '../types/spotify-types';
+import { removeTracksWithoutPreview } from "../core/utils";
 
 export interface NowPlaying {
   track?: Track,
@@ -15,7 +16,7 @@ export class NowPlayingService {
   nowPlaying: BehaviorSubject<NowPlaying> = new BehaviorSubject<NowPlaying>({});
   nowPlaying$: Observable<any> = this.nowPlaying.asObservable();
   currentlyPlaying: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  currentlyPlaying$: Observable<any> = this.currentlyPlaying.asObservable();
+  currentlyPlaying$: Observable<boolean> = this.currentlyPlaying.asObservable();
 
   currentlyPlayingTrack;
   currentlyPlayingFlag: boolean = false;
@@ -29,14 +30,15 @@ export class NowPlayingService {
   constructor() { }
 
   updateNowPlaying(track: Track, trackList?: Track[]): void {
+    const tracksWithPreview = removeTracksWithoutPreview(trackList);
     if(track.preview_url) {
       this.initTrackAudio(track.preview_url);
-      trackList.forEach((x, index) => {
+      tracksWithPreview.forEach((x, index) => {
         if(x.id === track.id) {
           this.currentlyPlayingIndex = index;
         }
       })
-      this.nowPlaying.next({ track: track, trackList: trackList });
+      this.nowPlaying.next({ track: track, trackList: tracksWithPreview });
     }
   }
 
@@ -61,8 +63,12 @@ export class NowPlayingService {
 
   playPrevious(): void {
     const trackList = this.nowPlaying.getValue().trackList;
-    if(this.currentlyPlayingIndex > 0) {
-      this.updateNowPlaying(trackList[this.currentlyPlayingIndex - 1], trackList);
+    if(this.getPlayingCurrentTime() < 4) {
+      if(this.currentlyPlayingIndex > 0) {
+        this.updateNowPlaying(trackList[this.currentlyPlayingIndex - 1], trackList);
+      }
+    } else {
+      this.currentlyPlayingTrack.currentTime = 0;
     }
   }
 
@@ -76,6 +82,10 @@ export class NowPlayingService {
 
   getPlayingDuration(): number {
     return this.currentlyPlayingTrack.duration;
+  }
+
+  getPlayingCurrentTime(): number {
+    return this.currentlyPlayingTrack.currentTime;
   }
 
   initTrackAudio(url: string): void {

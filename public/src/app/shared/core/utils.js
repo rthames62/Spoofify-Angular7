@@ -134,3 +134,7 @@ export function getBrowserBreakpoint() {
         return 'xs';
     }
 }
+
+export function removeTracksWithoutPreview(tracks) {
+    return tracks.filter(track => track.preview_url);
+  }

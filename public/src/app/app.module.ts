@@ -31,6 +31,13 @@ const routes: Routes = [
       preload: false
     }
   },
+  {
+    path: 'album',
+    loadChildren: './album/album.module#AlbumModule',
+    data: {
+      preload: false
+    }
+  },
   { path: '', redirectTo: 'browse/featured', pathMatch: 'full' }
 ]
 

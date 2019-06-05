@@ -1,18 +1,18 @@
 <article class="album_wrapper">
-  <div class="album">
+  <div class="album" [ngClass]="{ playing: currentlyPlayingFlag && currentlyPlayingInAlbum }">
     <div class="album__cover_art">
-        <img class="cover_art medium" [src]="album.images[0].url">
+        <img class="cover_art medium" [src]="album ? album.images[0].url : playlist.images[0].url">
         <div class="album__playback">
-          <div class="player_controls__play">
-              <i class="fas fa-play"></i>
+          <div (click)="currentlyPlayingFlag && currentlyPlayingInAlbum ? pause() : play()" class="player_controls__play">
+              <i class="fas" [ngClass]="currentlyPlayingFlag && currentlyPlayingInAlbum ? 'fa-pause' : 'fa-play'"></i>
           </div>
         </div>
     </div>
-    <div class="album__name_wrapper">
+    <div *ngIf="album" class="album__name_wrapper">
         <a class="album__name" routerLink="">{{ album.name }}</a>
     </div>
   </div>
-  <div class="artist">
+  <div *ngIf="album" class="artist">
     <a class="artist__name" routerLink="/artist/{{ album.artists[0].id }}">{{ album.artists[0].name }}</a>
   </div>
 </article>

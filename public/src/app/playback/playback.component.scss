@@ -28,6 +28,7 @@
     &__album_info {
         display: flex;
         align-items: center;
+        padding-right: 20px;
 
         .cover_art {
             background: $color-neutral;
@@ -51,7 +52,6 @@
     }
 
     &__progress_bar {
-        @include transition(1s linear width);
         width: 0;
         height: 4px;
         position: absolute;

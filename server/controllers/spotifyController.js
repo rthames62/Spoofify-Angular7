@@ -119,7 +119,16 @@ const getArtistAppearsOn = (req, res) => {
 
 const getArtistTopTracks = (req, res) => {
     request.get(`${baseUri}/artists/${req.params.id}/top-tracks?country=us`, authHeaders, (err, response, body) => {
-        console.log(response.statusCode)
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(response);
+        }
+    })
+}
+
+const getAlbumById = (req, res) => {
+    request.get(`${baseUri}/albums/${req.params.id}?market=us`, authHeaders, (err, response, body) => {
         if(!err && response.statusCode === 200) {
             res.json(body);
         } else {
@@ -139,5 +148,6 @@ module.exports = {
     getArtistAlbums: getArtistAlbums,
     getArtistSingles: getArtistSingles,
     getArtistCompilations: getArtistCompilations,
-    getArtistAppearsOn: getArtistAppearsOn
+    getArtistAppearsOn: getArtistAppearsOn,
+    getAlbumById: getAlbumById
 }

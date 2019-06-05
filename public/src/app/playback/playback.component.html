@@ -1,7 +1,9 @@
 <footer class="playback">
   <div class="now_playing">
     <div class="now_playing__album_info">
-        <img *ngIf="nowPlaying" class="cover_art xs" [src]="nowPlaying.track.album.images[0].url" />
+        <div class="cover_art_wrapper">
+            <img *ngIf="nowPlaying" class="cover_art xs" [src]="nowPlaying.track.album.images[0].url" />
+        </div>
         <div *ngIf="nowPlaying" class="currently_playing ellipsis_one_line">
             <div class="currently_playing__track_name ellipsis_one_line">
                 <a routerLink="/album/{{ nowPlaying.track.album.id }}">{{ nowPlaying.track.name }}</a>
@@ -32,7 +34,7 @@
       <div class="playback_bar">
         <div class="playback_bar__time">{{ currentlyPlayingProgress }}</div>
         <div class="playback_bar__progress_bar_wrapper">
-          <div [ngClass]="{ 'no-transition': nextSongTransition }" [style.width.%]="progressBarTime * 100" class="playback_bar__progress_bar"></div>
+          <div [ngClass]="{ 'no-transition': nextSongTransition }" [style.width.%]="progressBarTime" class="playback_bar__progress_bar"></div>
         </div>
         <div class="playback_bar__time">{{ currentlyPlayingDurationDisplay }}</div>
       </div>

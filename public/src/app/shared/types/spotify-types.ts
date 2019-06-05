@@ -60,9 +60,26 @@ export interface Playlist {
     snapshot_id: string,
     tracks: {
         href: string, 
-        items: Track[], 
+        items: PlaylistItem[], 
         limit: number
     }
+    type: string,
+    uri: string
+}
+
+export interface PlaylistItem {
+    added_at: string,
+    added_by: PlaylistItemAddedBy,
+    is_local: boolean,
+    primary_color: string,
+    track: Track,
+    video_thumbnail: {}
+}
+
+export interface PlaylistItemAddedBy {
+    external_urls: {},
+    href: string,
+    id: string,
     type: string,
     uri: string
 }

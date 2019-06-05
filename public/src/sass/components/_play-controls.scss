@@ -23,9 +23,14 @@
             color: $white;
             border: 1px solid $color-neutral;
             border-radius: 500px;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             padding-left: 5px;
+
+            &.fa-pause {
+                padding: 0;
+                font-size: 32px;
+            }
         }
     
         &.small {

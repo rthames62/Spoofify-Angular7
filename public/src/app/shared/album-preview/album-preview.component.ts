@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Album } from '../types/spotify-types';
+import { Album, Playlist, Track } from '../types/spotify-types';
+import { NowPlayingService, NowPlaying } from '../services/now-playing.service';
+import { removeTracksWithoutPreview } from "../core/utils";
 
 @Component({
   selector: 'sc-album-preview',
@@ -9,11 +11,53 @@ import { Album } from '../types/spotify-types';
 export class AlbumPreviewComponent implements OnInit {
 
   @Input('album') album: Album;
+  @Input('playlist') playlist: Playlist;
+  currentlyPlayingTrack: Track;
+  currentlyPlayingFlag: boolean = false;
+  currentlyPlayingInAlbum: boolean = false;
+  playlistTracksList: Track[] = [];
 
-  constructor() { }
+  constructor(private nowPlayingService: NowPlayingService) { }
 
   ngOnInit() {
-    
+    if(this.playlist) {
+      this.playlist.tracks.items.forEach(track => this.playlistTracksList.push(track.track));
+    }
+    this.nowPlayingService.nowPlaying$.subscribe((nowPlaying: NowPlaying) => {
+      if(nowPlaying.track) {
+        this.currentlyPlayingTrack = nowPlaying.track;
+        if(this.album) {
+          this.currentlyPlayingInAlbum = nowPlaying.track.album.id === this.album.id;
+        } else if(this.playlist) {
+          const trackList = this.playlist.tracks.items;
+          for(let i = 0; i < trackList.length; i++) {
+            console.log(trackList[i].track.id, nowPlaying.track.id);
+            if(trackList[i].track.id === nowPlaying.track.id) {
+              this.currentlyPlayingInAlbum = true;
+              break;
+            }
+          }
+          console.log(this.currentlyPlayingInAlbum);
+        }
+      }
+    });
+    this.nowPlayingService.currentlyPlaying$.subscribe(cp => this.currentlyPlayingFlag = cp);
   }
 
+  play(): void {
+    if(this.currentlyPlayingTrack) {
+      this.nowPlayingService.play();
+    } else {
+      if(this.album) {
+
+      } else if(this.playlist) {
+        const tracksWithAudio = removeTracksWithoutPreview(this.playlistTracksList);
+        this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio);
+      }
+    }
+  }
+
+  pause(): void {
+    this.nowPlayingService.pause();
+  }
 }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NowPlayingService } from '../shared/services/now-playing.service';
 import { Playlist, Track } from '../shared/types/spotify-types';
 import { MainBackgroundService } from '../shared/services/main-background.service';
+import { removeTracksWithoutPreview } from "../shared/core/utils";
 
 @Component({
   selector: 'sc-playlist',
@@ -12,6 +13,10 @@ import { MainBackgroundService } from '../shared/services/main-background.servic
 export class PlaylistComponent implements OnInit, OnDestroy {
 
   playlist: Playlist;
+  currentlyPlayingFlag: boolean = false;
+  currentlyPlayingInPlaylist: boolean = false;
+  currentlyPlayingTrack: Track;
+  trackList: Track[] = [];
 
   constructor(private route: ActivatedRoute,
     private nowPlaying: NowPlayingService,
@@ -22,7 +27,21 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.playlist = data.playlist;
+      this.playlist.tracks.items.forEach(track => this.trackList.push(track.track));
+    });
+    this.nowPlaying.nowPlaying$.subscribe(nowPlaying => {
+      if(nowPlaying.track) {
+        const items = this.playlist.tracks.items;
+        this.currentlyPlayingTrack = nowPlaying.track;
+        for(let i = 0; i < items.length; i++) {
+          if(items[i].track.id === nowPlaying.track.id) {
+            this.currentlyPlayingInPlaylist = true;
+            break;
+          }
+        }
+      }
     })
+    this.nowPlaying.currentlyPlaying$.subscribe(cp => this.currentlyPlayingFlag = cp);
   }
 
   ngOnDestroy() {
@@ -31,6 +50,20 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   }
 
   updateNowPlaying(track: Track): void {
-    this.nowPlaying.updateNowPlaying(track, this.playlist.tracks.items);
+    this.nowPlaying.updateNowPlaying(track, this.trackList);
+  }
+
+  play(): void {
+    if(this.currentlyPlayingTrack && this.currentlyPlayingInPlaylist) {
+      this.nowPlaying.play();
+    } else {
+      const tracksWithPreview = removeTracksWithoutPreview(this.trackList);
+      console.log(this.trackList);
+      this.nowPlaying.updateNowPlaying(tracksWithPreview[0], this.trackList);
+    }
+  }
+
+  pause(): void {
+    this.nowPlaying.pause();
   }
 }

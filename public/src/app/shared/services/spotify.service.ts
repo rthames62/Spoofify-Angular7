@@ -79,4 +79,10 @@ export class SpotifyConnectService {
       map((res: any) => JSON.parse(res._body))
     )
   }
+
+  getAlbumById(id: string): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/album/${id}`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
 }

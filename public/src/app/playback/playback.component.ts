@@ -43,7 +43,6 @@ export class PlaybackComponent implements OnInit {
           const playingDuration = this.nowPlayingService.getPlayingDuration();
           this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(playingDuration);
           this.currentlyPlayingDurationSeconds = Math.floor(playingDuration);
-          console.log(this.currentlyPlayingDurationDisplay, this.currentlyPlayingDurationSeconds);
           this.initTimer();
         }, 200);
         
@@ -51,7 +50,6 @@ export class PlaybackComponent implements OnInit {
     });
     this.nowPlayingService.currentlyPlaying$.subscribe(bool => {
       this.currentlyPlayingFlag = bool;
-      console.log(bool);
       if(!bool) {
         this.destroyTimer.next(true);
       }
@@ -83,17 +81,18 @@ export class PlaybackComponent implements OnInit {
 
   initTimer(): void {
     const playingDuration = this.nowPlayingService.getPlayingDuration();
-    this.currentlyPlayingProgress$ = timer(playingDuration, 1000).pipe(
+    this.currentlyPlayingProgress$ = timer(playingDuration, 50).pipe(
       takeUntil(this.destroyTimer$)
     )
     
     this.currentlyPlayingProgress$.subscribe(e => {
-      this.progressBarTime = (this.currentlyPlayingProgressSeconds === 0 ? 1 : this.currentlyPlayingProgressSeconds) / (playingDuration - 2);
-      this.currentlyPlayingProgressSeconds++;
-      this.currentlyPlayingDurationSeconds--;
+      const currentTime = this.nowPlayingService.getPlayingCurrentTime();
+      this.progressBarTime = (currentTime / playingDuration) * 100;
+      this.currentlyPlayingProgressSeconds = Math.floor(currentTime);
+      this.currentlyPlayingDurationSeconds = playingDuration - Math.floor(currentTime);
       this.currentlyPlayingProgress = convertSecondsToMinutes(this.currentlyPlayingProgressSeconds);
       this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(this.currentlyPlayingDurationSeconds);
-      if(this.currentlyPlayingDurationSeconds === 0) {
+      if(Math.floor(this.currentlyPlayingDurationSeconds) === 0) {
         this.resetProgressBar();
         this.nowPlayingService.playNext();
       }
@@ -101,8 +100,6 @@ export class PlaybackComponent implements OnInit {
   }
 
   resetProgressBar(): void {
-    this.nextSongTransition = true;
     this.progressBarTime = 0;
-    setTimeout(() => this.nextSongTransition = false, 50);
   }
 }

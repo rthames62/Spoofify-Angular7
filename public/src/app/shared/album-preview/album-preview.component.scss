@@ -53,6 +53,18 @@
     .player_controls__play {
         display: none;
     }
+
+    &.playing {
+        
+        .cover_art {
+            @include filter(brightness(.3));
+            @include transition(.2s ease filter);
+        }
+
+        .player_controls__play {
+            display: block;
+        }
+    }
 }
 
 .artist {
