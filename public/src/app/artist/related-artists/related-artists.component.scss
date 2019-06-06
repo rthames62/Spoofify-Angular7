@@ -1,0 +1,28 @@
+@import '../../../sass/output.scss';
+
+.related_artists {
+    padding-top: 40px;
+}
+
+.artist {
+    margin-bottom: 40px;
+
+    &__image {
+        width: 100%;
+        border-radius: 50%;
+        height: 100%;
+        padding-top: 100%;
+        background-size: cover;
+        margin-bottom: 15px;
+    }
+
+    &__name {
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: .2px;
+        font-weight: $weight-medium;
+        text-transform: none;
+        text-align: center;
+        color: $white;
+    }
+}

@@ -4,23 +4,27 @@
         @include box-shadow(0 0 10px rgba(0, 0, 0, .1))
     }
 
+    &.xs, &.small, &.medium, &.large {
+        width: 100%;
+    }
+
     &.xs {
-        width: 56px;
-        height: 56px;
+        min-width: 56px;
+        min-height: 56px;
     }
 
     &.small {
-        width: 100px;
-        height: 100px;
+        min-width: 100px;
+        min-height: 100px;
     }
 
     &.medium {
-        width: 160px;
-        height: 160px;
+        min-width: 160px;
+        min-height: 160px;
     }
 
     &.large {
-        width: 240px;
-        height: 240px;
+        min-width: 240px;
+        min-height: 240px;
     }
 }

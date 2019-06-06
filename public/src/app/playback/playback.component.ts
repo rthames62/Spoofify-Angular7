@@ -39,6 +39,7 @@ export class PlaybackComponent implements OnInit {
       if(nowPlaying.trackList) {
         this.destroyTimer.next(true);
         this.nowPlaying = nowPlaying;      
+        console.log(this.nowPlaying);
         setTimeout(() => {
           const playingDuration = this.nowPlayingService.getPlayingDuration();
           this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(playingDuration);

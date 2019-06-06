@@ -78,7 +78,7 @@ const getArtistById = (req, res) => {
 }
 
 const getArtistAlbums = (req, res) => {
-    request.get(`${baseUri}/artists/${req.params.id}/albums?market=US`, authHeaders, (err, response, body) => {
+    request.get(`${baseUri}/artists/${req.params.id}/albums?market=US&include_groups=album`, authHeaders, (err, response, body) => {
         if(!err && response.statusCode === 200) {
             res.json(body);
         } else {
@@ -137,6 +137,16 @@ const getAlbumById = (req, res) => {
     })
 }
 
+const getArtistRelatedArtists = (req, res) => {
+    request.get(`${baseUri}/artists/${req.params.id}/related-artists`, authHeaders, (err, response, body) => {
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(response);
+        }
+    })
+}
+
 module.exports = {
     authorizeSpotify: authorizeSpotify,
     getCategories: getCategories,
@@ -149,5 +159,6 @@ module.exports = {
     getArtistSingles: getArtistSingles,
     getArtistCompilations: getArtistCompilations,
     getArtistAppearsOn: getArtistAppearsOn,
-    getAlbumById: getAlbumById
+    getAlbumById: getAlbumById,
+    getArtistRelatedArtists: getArtistRelatedArtists
 }

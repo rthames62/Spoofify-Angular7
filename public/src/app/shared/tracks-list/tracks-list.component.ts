@@ -27,11 +27,14 @@ export class TracksListComponent implements OnInit, OnChanges {
 
   ngOnChanges(e) {
     if(e.tracks && e.tracks.currentValue) {
+      this.tracksList = e.tracks.currentValue;
       this.initTracksList();
     }
     this.nowPlayingService.nowPlaying$.subscribe(currentTrack => {
       if(currentTrack.trackList) {
-        this.tracksList.forEach(track => track.currentlyPlaying = track.id === currentTrack.track.id);
+        if(this.tracksList) {
+          this.tracksList.forEach(track => track.currentlyPlaying = track.id === currentTrack.track.id);
+        }
       }
     })
     this.nowPlayingService.currentlyPlaying$.subscribe(bool => {
@@ -47,7 +50,7 @@ export class TracksListComponent implements OnInit, OnChanges {
     return convertMillisecondsToMinutes(millis);
   }
 
-  convertPlaylistTracks(tracks) {
+  convertPlaylistTracks(tracks): Track[] {
     let arr = [];
     tracks.forEach(x => arr.push(x.track));
     return arr;
@@ -57,8 +60,7 @@ export class TracksListComponent implements OnInit, OnChanges {
     this.nowPlayingService.pause();
   }
 
-  private initTracksList() {
-    this.tracksList = this.tracks[0].track ? this.convertPlaylistTracks(this.tracks) : this.tracks;
+  private initTracksList(): void {
     this.tracksList = this.type === 'popular' ? this.tracksList.slice(0, 5) : this.tracksList;
     this.tracksList.forEach(track => track.currentlyPlaying = false);
   }

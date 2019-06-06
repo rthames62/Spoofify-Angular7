@@ -8,17 +8,18 @@ export interface Artist {
 }
 
 export interface Album {
-    album_type: string,
-    artists: Artist[],
-    href: string,
+    album_type?: string,
+    artists?: Artist[],
+    href?: string,
     id: string,
-    images: CoverArt[],
-    name: string,
-    release_date: string,
-    release_date_precision: string,
-    total_tracks: number,
-    type: string,
-    uri: string
+    images?: CoverArt[],
+    name?: string,
+    release_date?: string,
+    release_date_precision?: string,
+    total_tracks?: number,
+    type?: string,
+    uri?: string,
+    tracks?: { items: Track[] }
 }
 
 export interface CoverArt {
@@ -43,7 +44,8 @@ export interface Track {
     track: boolean,
     track_number: number,
     type: string,
-    uri: string
+    uri: string,
+    currentlyPlaying?: boolean
 }
 
 export interface Playlist {

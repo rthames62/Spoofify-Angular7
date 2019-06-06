@@ -1,0 +1,37 @@
+<section class="album_wrapper" *ngIf="tracks">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-lg-3 col-xl-4">
+        <header class="album_header">
+          <div class="row">
+            <div class="col-md-4 col-lg-12">
+                <sc-album-preview *ngIf="album" [album]="album"></sc-album-preview>
+                <sc-album-preview *ngIf="playlist" [playlist]="playlist"></sc-album-preview>
+            </div>
+            <div class="col-md-8 col-lg-12">
+              <div class="album_header__info">
+                <div class="album_header__album_info">
+                    <h2>{{ title }}</h2>
+                    <p><span class="album_header__by">By </span><span class="album_header__owner">{{ playlist?.owner.display_name }}</span></p>
+                </div>
+                <p class="album_header__description">{{ playlist?.description }}</p>
+                <p class="album_header__amount">{{ tracks.length }} songs</p>
+                <div class="album_header__controls">
+                  <button (click)="currentlyPlayingFlag && currentlyPlayingInTrackList ? pause() : play()" class="play">
+                    {{ currentlyPlayingFlag && currentlyPlayingInTrackList ? 'Pause' : 'Play' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div class="col-xs-12 col-lg-9 col-xl-8">
+          <sc-tracks-list [tracks]="tracks" [type]="album ? 'less-detail' : 'full-detail'"></sc-tracks-list>
+          <ng-container *ngIf="album">
+            <p class="copyright" *ngFor="let copyright of album.copyrights">{{ copyright.text }}</p>
+          </ng-container>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,18 +1,1 @@
-<section class="playlist_wrapper">
-  <header class="playlist_header">
-    <!-- <img #coverArt class="cover_art shadow medium" [src]="playlist.images[0].url"> -->
-    <sc-album-preview [playlist]="playlist"></sc-album-preview>
-    <div class="playlist_header__info">
-      <h2>{{ playlist.name }}</h2>
-      <p><span class="playlist_header__by">By </span><span class="playlist_header__owner">{{ playlist.owner.display_name }}</span></p>
-      <p class="playlist_header__description">{{ playlist.description }}</p>
-      <p class="playlist_header__amount">{{ playlist.tracks.items.length }} songs</p>
-      <div class="playlist_header__controls">
-        <button (click)="currentlyPlayingFlag && currentlyPlayingInPlaylist ? pause() : play()" class="play">
-          {{ currentlyPlayingFlag && currentlyPlayingInPlaylist ? 'Pause' : 'Play' }}
-        </button>
-      </div>
-    </div>
-  </header>
-  <sc-tracks-list [tracks]="playlist.tracks.items" [type]="'full-detail'"></sc-tracks-list>
-</section>
+<sc-album-layout [album]="album"></sc-album-layout>

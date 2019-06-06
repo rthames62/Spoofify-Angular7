@@ -1,4 +1,4 @@
-<article class="album_wrapper">
+<article class="album_wrapper" *ngIf="album || playlist">
   <div class="album" [ngClass]="{ playing: currentlyPlayingFlag && currentlyPlayingInAlbum }">
     <div class="album__cover_art">
         <img class="cover_art medium" [src]="album ? album.images[0].url : playlist.images[0].url">
@@ -9,7 +9,7 @@
         </div>
     </div>
     <div *ngIf="album" class="album__name_wrapper">
-        <a class="album__name" routerLink="">{{ album.name }}</a>
+        <a class="album__name" routerLink="/album/{{ album.id }}">{{ album.name }}</a>
     </div>
   </div>
   <div *ngIf="album" class="artist">

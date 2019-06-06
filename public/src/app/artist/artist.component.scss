@@ -72,6 +72,8 @@
             display: inline-block;
 
             &.active {
+                opacity: 1;
+
                 &::after {
                     @include active-link;
                 }

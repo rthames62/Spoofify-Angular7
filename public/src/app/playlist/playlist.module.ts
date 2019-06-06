@@ -3,15 +3,13 @@ import { CommonModule } from '@angular/common';
 import { PlaylistComponent } from './playlist.component';
 import { RouterModule } from '@angular/router';
 import { PlaylistResolverService } from './resolver/playlist-resolver.service';
-import { TracksListModule } from '../shared/tracks-list/tracks-list.module';
-import { AlbumPreviewModule } from '../shared/album-preview/album-preview.module';
+import { AlbumLayoutModule } from '../shared/album-layout/album-layout.module';
 
 @NgModule({
   declarations: [PlaylistComponent],
   imports: [
     CommonModule,
-    TracksListModule,
-    AlbumPreviewModule,
+    AlbumLayoutModule,
     RouterModule.forChild([
       { 
         path: ':id',

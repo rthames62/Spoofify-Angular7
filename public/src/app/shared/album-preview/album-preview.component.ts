@@ -31,13 +31,11 @@ export class AlbumPreviewComponent implements OnInit {
         } else if(this.playlist) {
           const trackList = this.playlist.tracks.items;
           for(let i = 0; i < trackList.length; i++) {
-            console.log(trackList[i].track.id, nowPlaying.track.id);
             if(trackList[i].track.id === nowPlaying.track.id) {
               this.currentlyPlayingInAlbum = true;
               break;
             }
           }
-          console.log(this.currentlyPlayingInAlbum);
         }
       }
     });
@@ -45,11 +43,18 @@ export class AlbumPreviewComponent implements OnInit {
   }
 
   play(): void {
-    if(this.currentlyPlayingTrack) {
+    if(this.currentlyPlayingTrack && this.currentlyPlayingInAlbum) {
       this.nowPlayingService.play();
     } else {
       if(this.album) {
-
+        this.album.tracks.items.forEach(track => {
+          track.album = {
+            id: this.album.id,
+            images: this.album.images
+          }
+        });
+        const tracksWithAudio = removeTracksWithoutPreview(this.album.tracks.items);
+        this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio);
       } else if(this.playlist) {
         const tracksWithAudio = removeTracksWithoutPreview(this.playlistTracksList);
         this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio);

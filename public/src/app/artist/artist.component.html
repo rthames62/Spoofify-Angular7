@@ -1,8 +1,10 @@
-<header [ngStyle]="artistImage" class="artist_header">
+<header [ngStyle]="artistImage" class="artist_header" *ngIf="artist">
   <span class="artist_header__followers">{{ artist.followers.total | number }} Monthly Listeners</span>
   <h1 class="artist_header__name large">{{ artist.name }}</h1>
   <div class="artist_header__controls">
-    <button class="play">Play</button>
+    <button (click)="currentlyPlayingFlag && currentlyPlayingArtist ? pause() : play()" class="play">
+      {{ currentlyPlayingFlag && currentlyPlayingArtist ? 'Pause' : 'Play' }}
+    </button>
   </div>
   <nav class="artist_header__nav">
     <ol>
@@ -19,7 +21,7 @@
       <li>
         <div>
             <a 
-              routerLink="/artist/{{ artist.id }}/related" 
+              [routerLink]="[{ outlets: { artist: ['related'] } }]" 
               routerLinkActive="active">
               Related Artists
             </a>
@@ -37,25 +39,4 @@
     </ol>
   </nav>
 </header>
-<section class="artist_content">
-  <ng-container *ngIf="topTracks">
-      <h1>Popular</h1>
-      <sc-tracks-list [tracks]="topTracks.tracks" [type]="'popular'"></sc-tracks-list>
-  </ng-container>
-  <ng-container *ngIf="albums.length > 0">
-      <h1>Albums</h1>
-      <sc-albums-list [albums]="albums"></sc-albums-list>
-  </ng-container>
-  <ng-container *ngIf="singles.length > 0">
-      <h1>Singles and EPs</h1>
-      <sc-albums-list [albums]="singles"></sc-albums-list>
-  </ng-container>
-  <ng-container *ngIf="compilations.length > 0">
-      <h1>Compilations</h1>
-      <sc-albums-list [albums]="compilations"></sc-albums-list>
-  </ng-container>
-  <ng-container *ngIf="appearsOn.length > 0">
-      <h1>Appears On</h1>
-      <sc-albums-list [albums]="appearsOn"></sc-albums-list>
-  </ng-container>
-</section>
+<router-outlet name="artist"></router-outlet>

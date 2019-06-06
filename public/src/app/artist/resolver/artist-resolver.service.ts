@@ -14,7 +14,6 @@ export class ArtistResolverService {
 
   resolve(route: ActivatedRoute): Observable<Artist> {
     return this.spotify.getArtistById(route.params['id']).pipe(
-      take(1),
       mergeMap(artist => {
         if(artist) {
           return of(artist);

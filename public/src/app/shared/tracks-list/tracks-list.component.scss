@@ -3,6 +3,11 @@
 
 .tracks-wrapper {
     margin-top: 20px;
+    margin-bottom: 40px;
+
+    @include media-breakpoint-up(lg) {
+        margin-top: 0;
+    }
 }
 
 .track {
@@ -80,6 +85,7 @@
 
     &__cover_art_wrapper {
         margin-right: 10px;
+        width: 56px;
     }
 
     &.currently-playing {
@@ -89,29 +95,7 @@
     }
 
     &.no_preview {
-        &:hover {
-            &::after {
-                opacity: 1;
-            }
-        }
-
-        &::after {
-            @include transition(.2s ease opacity);
-            @include linear-gradient(90deg, $color-accent-tertiary, $color-accent-secondary);
-            content: 'This track does not have a preview, please log in to play full track.';
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            border-radius: 2px;
-            color: $white;
-            margin: 5px;
-            opacity: 0;
-        }
+        cursor: not-allowed;
     }
 }
 

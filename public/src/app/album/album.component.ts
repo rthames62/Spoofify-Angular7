@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Album } from '../shared/types/spotify-types';
 
 @Component({
   selector: 'sc-album',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlbumComponent implements OnInit {
 
-  constructor() { }
+  album: Album;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.album = data.album;
+    })
   }
 
 }

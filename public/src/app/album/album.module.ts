@@ -2,19 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlbumComponent } from './album.component';
 import { RouterModule } from '@angular/router';
-import { TracksListModule } from '../shared/tracks-list/tracks-list.module';
-import { AlbumPreviewModule } from '../shared/album-preview/album-preview.module';
+import { AlbumLayoutModule } from '../shared/album-layout/album-layout.module';
+import { AlbumResolverService } from './resolver/album-resolver.service';
 
 @NgModule({
   declarations: [ AlbumComponent ],
   imports: [
     CommonModule,
-    AlbumPreviewModule,
-    TracksListModule,
+    AlbumLayoutModule,
     RouterModule.forChild([
       {
         path: ':id',
-        component: AlbumComponent
+        component: AlbumComponent,
+        resolve: {
+          album: AlbumResolverService
+        }
       }
     ])
   ]

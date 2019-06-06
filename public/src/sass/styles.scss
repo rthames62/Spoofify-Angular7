@@ -75,3 +75,13 @@ a {
 .center {
     text-align: center;
 }
+
+.copyright {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: .015em;
+    color: $white;
+    opacity: .6;
+    padding: 0 5%;
+    width: 70%;
+}

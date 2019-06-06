@@ -1,9 +1,9 @@
-@import '../../sass/output.scss';
-@import '../../sass/components/cover-art';
-@import '../../sass/components/tracks-list';
-@import '../../sass/components/buttons';
+@import '../../../sass/output.scss';
+@import '../../../sass/components/cover-art';
+@import '../../../sass/components/tracks-list';
+@import '../../../sass/components/buttons';
 
-.playlist_header {
+.album_header {
     display: flex;
     padding-bottom: 30px;
     border-bottom: 1px solid rgba($color-neutral, .2);
@@ -61,7 +61,7 @@
         }
     }
 
-    &__playlist_info {
+    &__album_info {
 
         @include media-breakpoint-up(lg) {
             order: -2;
@@ -78,6 +78,6 @@
     }
 }
 
-.playlist_info {
+.album_info {
 
 }

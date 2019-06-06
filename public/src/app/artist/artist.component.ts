@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Artist, Album, Track } from '../shared/types/spotify-types';
 import { SpotifyConnectService } from '../shared/services/spotify.service';
+import { NowPlayingService } from '../shared/services/now-playing.service';
+import { removeTracksWithoutPreview } from "../shared/core/utils";
 
 @Component({
   selector: 'sc-artist',
@@ -12,41 +14,68 @@ export class ArtistComponent implements OnInit {
   artist: Artist;
   artistImage;
   albums: Album[];
-  singles: Album[];
-  compilations: Album[];
-  appearsOn: Album[];
-  topTracks: Track[];
 
-  constructor(private route: ActivatedRoute, private spotifyService: SpotifyConnectService) { }
+  currentlyPlayingFlag: boolean = false;
+  currentlyPlayingArtist: boolean = false;
+  currentlyPlayingTrack: Track;
+
+  constructor(private route: ActivatedRoute, private spotifyService: SpotifyConnectService, private nowPlayingService: NowPlayingService) { }
 
   ngOnInit() {
     this.route.data.subscribe((data: any) => {
       this.artist = data.artist;
       this.artistImage = this.setArtistImage(this.artist.images[0].url);
-      this.resetAlbumData();
-      this.loadAlbumData();
+      this.resetArtistData();
+
+      this.nowPlayingService.nowPlaying$.subscribe(nowPlaying => {
+        if(nowPlaying.track) {
+          this.currentlyPlayingTrack = nowPlaying.track;
+          for(let i = 0; i < nowPlaying.track.artists.length; i++) {
+            if(nowPlaying.track.artists[i].id === this.artist.id) {
+              this.currentlyPlayingArtist = true;
+              break;
+            }
+          }
+        }
+      });
+      this.nowPlayingService.currentlyPlaying$.subscribe(cp => this.currentlyPlayingFlag = cp);
+      this.spotifyService.getArtistAlbums(this.artist.id).subscribe(albums => {
+        this.albums = albums.items;
+        this.albums.forEach(album => {
+          this.spotifyService.getAlbumById(album.id).subscribe(res => {
+            album.tracks = { items: res.tracks.items }
+          })
+        })
+      });
     });
+  }
+
+  play(): void {
+    if(this.currentlyPlayingArtist) {
+      this.nowPlayingService.play();
+    } else {
+      const tracksOnFirstAlbum = this.albums[0].tracks.items;
+      tracksOnFirstAlbum.forEach(track => {
+        track.album = {
+          id: this.albums[0].id,
+          images: this.albums[0].images
+        }
+      })
+      const tracksWithAudio = removeTracksWithoutPreview(tracksOnFirstAlbum);
+      this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio);
+    }
+  }
+
+  pause(): void {
+    this.nowPlayingService.pause();
   }
 
   private setArtistImage(url: string) {
     return { 'background-image': `url('${url}')` };
   }
 
-  private loadAlbumData(): void {
-    this.spotifyService.getArtistAlbums(this.route.snapshot.params.id).subscribe(albums => this.albums = albums.items);
-    this.spotifyService.getArtistAlbumSingles(this.route.snapshot.params.id).subscribe(singles => this.singles = singles.items);
-    this.spotifyService.getArtistByTopTracks(this.route.snapshot.params.id).subscribe(tracks => {
-      this.topTracks = tracks;
-    });
-    this.spotifyService.getArtistAlbumCompilations(this.route.snapshot.params.id).subscribe(compilations => this.compilations = compilations.items);
-    this.spotifyService.getArtistAlbumAppearsOn(this.route.snapshot.params.id).subscribe(albums => this.appearsOn = albums.items);
-  }
-
-  private resetAlbumData(): void {
+  private resetArtistData(): void {
     this.albums = [];
-    this.singles = [];
-    this.topTracks = [];
-    this.compilations = [];
-    this.appearsOn = [];
+    this.currentlyPlayingArtist = false;
   }
 }

@@ -45,6 +45,7 @@ export class SpotifyConnectService {
   }
 
   getArtistById(id: string): Observable<any> {
+    console.log(id);
     return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}`).pipe(
       map((res: any) => JSON.parse(res._body))
     )
@@ -76,6 +77,12 @@ export class SpotifyConnectService {
 
   getArtistAlbumAppearsOn(id: string): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}/appears-on`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
+  getArtistRelatedArtists(id: string): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}/related-artists`).pipe(
       map((res: any) => JSON.parse(res._body))
     )
   }
