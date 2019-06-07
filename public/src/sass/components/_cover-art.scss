@@ -1,30 +1,36 @@
 .cover_art {
+    width: 100%;
+    height: 100%;
+    padding-top: 100%;
+    background-size: cover;
 
     &.shadow {
         @include box-shadow(0 0 10px rgba(0, 0, 0, .1))
     }
 
-    &.xs, &.small, &.medium, &.large {
-        width: 100%;
+    &.rounded {
+        border-radius: 50% !important;
     }
 
-    &.xs {
-        min-width: 56px;
-        min-height: 56px;
-    }
+    // width: 100%;
 
-    &.small {
-        min-width: 100px;
-        min-height: 100px;
-    }
+    // &.xs {
+    //     max-width: 56px;
+    //     max-height: 56px;
+    // }
 
-    &.medium {
-        min-width: 160px;
-        min-height: 160px;
-    }
+    // &.small {
+    //     max-width: 100px;
+    //     max-height: 100px;
+    // }
 
-    &.large {
-        min-width: 240px;
-        min-height: 240px;
-    }
+    // &.medium {
+    //     max-width: 160px;
+    //     max-height: 160px;
+    // }
+
+    // &.large {
+    //     max-width: 240px;
+    //     max-height: 240px;
+    // }
 }

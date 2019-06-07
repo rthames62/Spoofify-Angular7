@@ -22,7 +22,6 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private nowPlayingService: NowPlayingService, private backgroundService: MainBackgroundService) { }
 
   ngOnInit() {
-    console.log(this.album);
     if(this.playlist) {
       this.playlist.tracks.items.forEach(track => this.tracks.push(track.track));
     } else if(this.album) {
@@ -38,12 +37,7 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
     this.nowPlayingService.nowPlaying$.subscribe(nowPlaying => {
       if(nowPlaying.track) {
         this.currentlyPlayingTrack = nowPlaying.track;
-        for(let i = 0; i < this.tracks.length; i++) {
-          if(this.tracks[i].id === nowPlaying.track.id) {
-            this.currentlyPlayingInTrackList = true;
-            break;
-          }
-        }
+        this.currentlyPlayingInTrackList = this.album ? this.album.id === nowPlaying.idOfTracklist : this.playlist.id === nowPlaying.idOfTracklist;
       }
     });
     this.nowPlayingService.currentlyPlaying$.subscribe(cp => this.currentlyPlayingFlag = cp);
@@ -58,7 +52,8 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   updateNowPlaying(track: Track): void {
-    this.nowPlayingService.updateNowPlaying(track, this.tracks);
+    console.log(this.playlist, this.album);
+    this.nowPlayingService.updateNowPlaying(track, this.tracks, this.album ? this.album.id : this.playlist.id);
   }
 
   play(): void {
@@ -66,7 +61,7 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
       this.nowPlayingService.play();
     } else {
       const tracksWithPreview = removeTracksWithoutPreview(this.tracks);
-      this.nowPlayingService.updateNowPlaying(tracksWithPreview[0], this.tracks);
+      this.nowPlayingService.updateNowPlaying(tracksWithPreview[0], this.tracks, this.album ? this.album.id : this.playlist.id);
     }
   }
 

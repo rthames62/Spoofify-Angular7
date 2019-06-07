@@ -20,5 +20,6 @@ app.get('/api/spotify/artist/:id/compilations', spotifyController.getArtistCompi
 app.get('/api/spotify/artist/:id/appears-on', spotifyController.getArtistAppearsOn);
 app.get('/api/spotify/artist/:id/related-artists', spotifyController.getArtistRelatedArtists);
 app.get('/api/spotify/album/:id', spotifyController.getAlbumById);
+app.get('/api/spotify/search/:q', spotifyController.searchSpotify);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`));

@@ -2,7 +2,7 @@
   <div class="now_playing">
     <div class="now_playing__album_info">
         <div class="cover_art_wrapper">
-            <img *ngIf="nowPlaying" class="cover_art xs" [src]="nowPlaying.track.album.images[0].url" />
+            <div *ngIf="nowPlaying" class="cover_art" [style.backgroundImage]="'url(' + nowPlaying.track.album.images[0].url + ')'"></div>
         </div>
         <div *ngIf="nowPlaying" class="currently_playing ellipsis_one_line">
             <div class="currently_playing__track_name ellipsis_one_line">
@@ -40,7 +40,12 @@
       </div>
     </div>
     <div class="now_playing__volume_controls">
-
+      <i (click)="toggleVolume()" class="fas" [ngClass]="volume === 0 ? 'fa-volume-mute' : 'fa-volume-up'"></i>
+      <div id="slider-wrapper" (click)="changeVolume($event)" class="volume__slider_wrapper">
+        <div [style.width.px]="volume" class="volume__slider_control">
+          <span #volumeHandle class="volume__handle"></span>
+        </div>
+      </div>
     </div>
   </div>
 </footer>

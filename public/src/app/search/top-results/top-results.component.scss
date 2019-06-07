@@ -1,0 +1,19 @@
+@import '../../../sass/output.scss';
+@import '../../../sass/components/cover-art';
+
+.featured {
+    padding-top: 40px;
+}
+
+.artists {
+
+    &__wrapper {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    &__link {
+        display: block;
+        padding-top: 20px;
+    }
+}

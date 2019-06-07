@@ -1,7 +1,7 @@
 <section class="artist_content">
   <ng-container *ngIf="topTracks">
       <h1>Popular</h1>
-      <sc-tracks-list [tracks]="topTracks.tracks" [type]="'popular'"></sc-tracks-list>
+      <sc-tracks-list [tracks]="topTracks" [type]="'popular'" [id]="artist.id"></sc-tracks-list>
   </ng-container>
   <ng-container *ngIf="albums.length > 0">
       <h1>Albums</h1>

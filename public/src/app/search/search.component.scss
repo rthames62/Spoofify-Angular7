@@ -1,0 +1,59 @@
+@import '../../sass/output.scss';
+@import '../../sass/components/sub-nav';
+@import '../../sass/components/cover-art';
+
+.artists {
+
+    &__wrapper {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    &__link {
+        display: block;
+        padding-top: 20px;
+    }
+}
+
+.search {
+    &__wrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: calc(100vw - 230px);
+        margin-right: auto;
+        background: $color-main-light;
+        padding: 20px 60px;
+        z-index: 15;
+    }
+
+    &__search_box {
+        font-size: 36px;
+        line-height: 44px;
+        color: $white;
+        text-transform: none;
+        caret-color: $color-accent;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        font-weight: $weight-bold;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__intro {
+        @extend .flex-all-center;
+        flex-direction: column;
+        height: 400px;
+    }
+
+    &__results_wrapper {
+        margin-top: 150px;
+    }
+}
+
+.nav_wrapper {
+    position: relative;
+}

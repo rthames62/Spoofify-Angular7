@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { map } from "rxjs/operators";
+import { map, throttle, throttleTime } from "rxjs/operators";
 import { MainBackgroundService } from './main-background.service';
 import { Album, Track } from '../types/spotify-types';
 
@@ -89,6 +89,13 @@ export class SpotifyConnectService {
 
   getAlbumById(id: string): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/album/${id}`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
+  searchSpotify(q): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/search/${q}`).pipe(
+      throttleTime(100),
       map((res: any) => JSON.parse(res._body))
     )
   }

@@ -8,7 +8,7 @@
           <i class="fas fa-ban"></i>
       </div>
       <div *ngIf="type == 'popular' && track.album.images" class="track__cover_art_wrapper">
-        <img class="cover_art xs" [src]="track.album.images[0].url">
+        <div class="cover_art" [style.backgroundImage]="'url(' + track.album.images[0].url + ')'"></div>
       </div>
       <div class="track__info ellipsis-one-line">
         <div class="track__name ellipsis_one_line">{{ track.name }}</div>

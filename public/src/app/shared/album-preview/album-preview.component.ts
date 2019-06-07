@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Album, Playlist, Track } from '../types/spotify-types';
 import { NowPlayingService, NowPlaying } from '../services/now-playing.service';
 import { removeTracksWithoutPreview } from "../core/utils";
+import { SpotifyConnectService } from '../services/spotify.service';
 
 @Component({
   selector: 'sc-album-preview',
@@ -10,59 +11,75 @@ import { removeTracksWithoutPreview } from "../core/utils";
 })
 export class AlbumPreviewComponent implements OnInit {
 
-  @Input('album') album: Album;
-  @Input('playlist') playlist: Playlist;
+  @Input() album: Album;
+  @Input() playlist: Playlist;
   currentlyPlayingTrack: Track;
   currentlyPlayingFlag: boolean = false;
   currentlyPlayingInAlbum: boolean = false;
   playlistTracksList: Track[] = [];
 
-  constructor(private nowPlayingService: NowPlayingService) { }
+  constructor(private nowPlayingService: NowPlayingService, private spotifyService: SpotifyConnectService) { }
 
   ngOnInit() {
     if(this.playlist) {
-      this.playlist.tracks.items.forEach(track => this.playlistTracksList.push(track.track));
+      if(this.playlist.tracks.items) {
+        this.convertPlaylistTracks();
+      }
     }
     this.nowPlayingService.nowPlaying$.subscribe((nowPlaying: NowPlaying) => {
       if(nowPlaying.track) {
         this.currentlyPlayingTrack = nowPlaying.track;
-        if(this.album) {
-          this.currentlyPlayingInAlbum = nowPlaying.track.album.id === this.album.id;
-        } else if(this.playlist) {
-          const trackList = this.playlist.tracks.items;
-          for(let i = 0; i < trackList.length; i++) {
-            if(trackList[i].track.id === nowPlaying.track.id) {
-              this.currentlyPlayingInAlbum = true;
-              break;
-            }
-          }
-        }
+        this.currentlyPlayingInAlbum = this.album ? this.album.id === nowPlaying.idOfTracklist : this.playlist.id === nowPlaying.idOfTracklist;
       }
     });
     this.nowPlayingService.currentlyPlaying$.subscribe(cp => this.currentlyPlayingFlag = cp);
   }
 
   play(): void {
-    if(this.currentlyPlayingTrack && this.currentlyPlayingInAlbum) {
-      this.nowPlayingService.play();
-    } else {
-      if(this.album) {
-        this.album.tracks.items.forEach(track => {
-          track.album = {
-            id: this.album.id,
-            images: this.album.images
-          }
-        });
-        const tracksWithAudio = removeTracksWithoutPreview(this.album.tracks.items);
-        this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio);
-      } else if(this.playlist) {
+    if(this.playlist && !this.playlist.tracks.items) {
+      this.spotifyService.getPlaylistById(this.playlist.id).subscribe(playlist => {
+        this.playlist = playlist;
+        this.convertPlaylistTracks();
         const tracksWithAudio = removeTracksWithoutPreview(this.playlistTracksList);
-        this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio);
+        this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio, this.playlist.id);
+      })
+    } else if(this.album && !this.album.tracks) {
+      this.spotifyService.getAlbumById(this.album.id).subscribe(album => {
+        this.album = album;
+        this.convertAlbumsTracks();
+        const tracksWithAudio = removeTracksWithoutPreview(this.album.tracks.items);
+        this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio, this.album.id);
+      })
+    } else {
+      if(this.currentlyPlayingTrack && this.currentlyPlayingInAlbum) {
+        this.nowPlayingService.play();
+      } else {
+        if(this.album) {
+          this.convertAlbumsTracks();
+          const tracksWithAudio = removeTracksWithoutPreview(this.album.tracks.items);
+          this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio, this.album.id);
+        } else if(this.playlist) {
+          const tracksWithAudio = removeTracksWithoutPreview(this.playlistTracksList);
+          this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio, this.playlist.id);
+        }
       }
     }
   }
 
   pause(): void {
     this.nowPlayingService.pause();
+  }
+
+  private convertPlaylistTracks(): void {
+    this.playlist.tracks.items.forEach(track => this.playlistTracksList.push(track.track));
+  }
+
+  private convertAlbumsTracks(): void {
+    this.album.tracks.items.forEach(track => {
+      track.album = {
+        id: this.album.id,
+        images: this.album.images
+      }
+    });
   }
 }

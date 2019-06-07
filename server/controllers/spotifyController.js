@@ -147,6 +147,16 @@ const getArtistRelatedArtists = (req, res) => {
     })
 }
 
+const searchSpotify = (req, res) => {
+    request.get(`${baseUri}/search?q=${req.params.q}*&type=album,artist,playlist,track&market=us&limit=20&best_match=true`, authHeaders, (err, response, body) => {
+        if(!err && response.statusCode === 200) {
+            res.json(body);
+        } else {
+            res.json(response);
+        }
+    })
+}
+
 module.exports = {
     authorizeSpotify: authorizeSpotify,
     getCategories: getCategories,
@@ -160,5 +170,6 @@ module.exports = {
     getArtistCompilations: getArtistCompilations,
     getArtistAppearsOn: getArtistAppearsOn,
     getAlbumById: getAlbumById,
-    getArtistRelatedArtists: getArtistRelatedArtists
+    getArtistRelatedArtists: getArtistRelatedArtists,
+    searchSpotify: searchSpotify
 }

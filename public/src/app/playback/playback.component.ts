@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NowPlayingService, NowPlaying } from '../shared/services/now-playing.service';
 import { convertSecondsToMinutes } from "../shared/core/utils";
-import { Observable, timer, of, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, timer, of, BehaviorSubject, Subject, fromEvent } from 'rxjs';
 import { skipWhile, filter, takeUntil, map } from 'rxjs/operators';
 
 @Component({
@@ -11,6 +11,7 @@ import { skipWhile, filter, takeUntil, map } from 'rxjs/operators';
 })
 export class PlaybackComponent implements OnInit {
 
+  @ViewChild('volumeHandle') volumeHandle;
   nowPlaying: NowPlaying;
   currentlyPlayingTrack;
   currentlyPlayingFlag: boolean = false;
@@ -24,6 +25,13 @@ export class PlaybackComponent implements OnInit {
   destroyTimer$: Observable<any> = this.destroyTimer.asObservable();
   progressBarTime: number;
   nextSongTransition: boolean = false;
+  _volume: number = 140;
+  volume: number = 140;
+  volumeBeforeMute: number;
+  muted: boolean = false;
+  mouseDown: boolean = false;
+  mouseMove$: Observable<any> = fromEvent(window, 'mousemove').pipe(filter(e => this.mouseDown));
+  startingX: number;
 
   constructor(private nowPlayingService: NowPlayingService) { }
 
@@ -39,9 +47,9 @@ export class PlaybackComponent implements OnInit {
       if(nowPlaying.trackList) {
         this.destroyTimer.next(true);
         this.nowPlaying = nowPlaying;      
-        console.log(this.nowPlaying);
         setTimeout(() => {
           const playingDuration = this.nowPlayingService.getPlayingDuration();
+          this.currentlyPlayingTrack = nowPlaying.track;
           this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(playingDuration);
           this.currentlyPlayingDurationSeconds = Math.floor(playingDuration);
           this.initTimer();
@@ -57,6 +65,28 @@ export class PlaybackComponent implements OnInit {
       if(this.nowPlaying && bool) {
         this.initTimer();
       }
+    });
+
+    fromEvent(this.volumeHandle.nativeElement, 'mousedown').subscribe((e: any) => {
+      this.startingX = e.pageX;
+      this.mouseDown = true;
+    });
+    fromEvent(window, 'mouseup').subscribe(e => {
+      this.mouseDown = false;
+    })
+    this.mouseMove$.subscribe(e => {
+      const move = e.x - this.startingX;
+      if(this.volume <= this._volume && this.volume >= 0) {
+        this.volume += move;
+        this.setVolume();
+
+        if(this.volume > this._volume) {
+          this.volume = this._volume;
+        } else if(this.volume < 0) {
+          this.volume = 0;
+        }
+      } 
+      this.startingX = e.x;
     });
   }
 
@@ -102,5 +132,27 @@ export class PlaybackComponent implements OnInit {
 
   resetProgressBar(): void {
     this.progressBarTime = 0;
+  }
+
+  changeVolume(e): void {
+    const wrapper = e.path.filter(el => el.id === 'slider-wrapper')[0];
+    this.volume = e.clientX - wrapper.offsetLeft + 5;
+    this.setVolume();
+  }
+
+  toggleVolume(): void {
+    if(this.muted) {
+      this.muted = false;
+      this.volume = this.volumeBeforeMute;
+    } else {
+      this.muted = true;
+      this.volumeBeforeMute = this.volume;
+      this.volume = 0;
+    }
+    this.setVolume();
+  }
+
+  private setVolume(): void {
+    this.nowPlayingService.setVolume(this.volume / this._volume);
   }
 }

@@ -21,7 +21,7 @@
     align-items: center;
     flex: 1;
 
-    &__album_info, &__player_controls {
+    &__album_info, &__volume_controls {
         width: 30%;
     }
 
@@ -29,11 +29,15 @@
         display: flex;
         align-items: center;
         padding-right: 20px;
+    }
 
-        .cover_art {
-            background: $color-neutral;
-            margin-right: 10px;
-            flex-basis: 50px;
+    &__volume_controls {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        i {
+            padding-right: 10px;
         }
     }
 }
@@ -106,6 +110,35 @@
 }
 
 .cover_art_wrapper {
-    max-width: 60px;
+    width: 60px;
     margin-right: 10px;
+}
+
+.volume {
+
+    &__slider_wrapper {
+        width: 140px;
+        height: 4px;
+        background: $color-neutral;
+        border-radius: 3px;
+    }
+
+    &__slider_control {
+        height: 100%;
+        background: $color-accent;
+        position: relative;
+        border-radius: 3px;
+        padding-left: 10px;
+    }
+
+    &__handle {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -4px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: $white;
+    }
 }

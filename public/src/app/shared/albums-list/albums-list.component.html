@@ -1,13 +1,30 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let album of albums | slice:0:sliceLength">
-        <sc-album-preview [album]="album"></sc-album-preview>
-    </div>
+    <ng-container *ngIf="albums">
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let album of albums | slice:0:sliceLength">
+            <sc-album-preview [album]="album"></sc-album-preview>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="playlists">
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let playlist of playlists | slice:0:sliceLength">
+            <sc-album-preview [playlist]="playlist"></sc-album-preview>
+        </div>
+    </ng-container>
   </div>
-  <div *ngIf="sliceLength <= albums.length" class="row justify-content-center">
-    <div class="col center">
-      <button *ngIf="sliceLength === length" (click)="sliceLength = albums.length" class="transparent">Show More <i class="fas fa-chevron-down"></i></button>
-      <button *ngIf="sliceLength === albums.length" (click)="sliceLength = length" class="transparent">Show Less <i class="fas fa-chevron-up"></i></button>
-    </div>
-  </div>
+  <ng-container *ngIf="albums">
+      <div *ngIf="sliceLength <= albums.length" class="row justify-content-center">
+        <div class="col center">
+          <button *ngIf="sliceLength === length" (click)="sliceLength = albums.length" class="transparent">Show More <i class="fas fa-chevron-down"></i></button>
+          <button *ngIf="sliceLength === albums.length" (click)="sliceLength = length" class="transparent">Show Less <i class="fas fa-chevron-up"></i></button>
+        </div>
+      </div>
+  </ng-container>
+  <ng-container *ngIf="playlists">
+      <div *ngIf="sliceLength <= playlists.length" class="row justify-content-center">
+        <div class="col center">
+          <button *ngIf="sliceLength === length" (click)="sliceLength = playlists.length" class="transparent">Show More <i class="fas fa-chevron-down"></i></button>
+          <button *ngIf="sliceLength === playlists.length" (click)="sliceLength = length" class="transparent">Show Less <i class="fas fa-chevron-up"></i></button>
+        </div>
+      </div>
+  </ng-container>
 </div>

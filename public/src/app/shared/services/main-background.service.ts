@@ -6,15 +6,19 @@ import { getAverageRGB, getDataUri, fullColorHex, startDownload } from "../core/
   providedIn: 'root'
 })
 export class MainBackgroundService {
-  defaultColor: string = '#383838';
+  defaultColor: string = '282828';
   backgroundColor: BehaviorSubject<string> = new BehaviorSubject<string>(this.defaultColor);
   backgroundColor$: Observable<any> = this.backgroundColor.asObservable();
   imageUri: string;
 
   constructor() { }
 
-  updateBackgroundColor(url: string): void {
-    this.getColorFromImage(url);
+  updateBackgroundColor(url?: string): void {
+    if(url) {
+      this.getColorFromImage(url);
+    } else {
+      this.backgroundColor.next(this.defaultColor);
+    }
   }
 
   getColorFromImage(url) {

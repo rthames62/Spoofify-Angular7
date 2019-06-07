@@ -5,7 +5,8 @@ import { removeTracksWithoutPreview } from "../core/utils";
 
 export interface NowPlaying {
   track?: Track,
-  trackList?: Track[]
+  trackList?: Track[],
+  idOfTracklist?: string
 }
 
 @Injectable({
@@ -14,7 +15,7 @@ export interface NowPlaying {
 export class NowPlayingService {
 
   nowPlaying: BehaviorSubject<NowPlaying> = new BehaviorSubject<NowPlaying>({});
-  nowPlaying$: Observable<any> = this.nowPlaying.asObservable();
+  nowPlaying$: Observable<NowPlaying> = this.nowPlaying.asObservable();
   currentlyPlaying: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentlyPlaying$: Observable<boolean> = this.currentlyPlaying.asObservable();
 
@@ -26,19 +27,20 @@ export class NowPlayingService {
   currentlyPlayingProgress;
   currentlyPlayingProgress$: Observable<any>;
   currentlyPlayingIndex: number;
+  volumeLevel: number = 1;
 
   constructor() { }
 
-  updateNowPlaying(track: Track, trackList?: Track[]): void {
+  updateNowPlaying(track: Track, trackList?: Track[], idOfTracklist?: string): void {
     const tracksWithPreview = removeTracksWithoutPreview(trackList);
-    if(track.preview_url) {
+    if(track && track.preview_url) {
       this.initTrackAudio(track.preview_url);
       tracksWithPreview.forEach((x, index) => {
         if(x.id === track.id) {
           this.currentlyPlayingIndex = index;
         }
       })
-      this.nowPlaying.next({ track: track, trackList: tracksWithPreview });
+      this.nowPlaying.next({ track: track, trackList: tracksWithPreview, idOfTracklist });
     }
   }
 
@@ -57,7 +59,7 @@ export class NowPlayingService {
   playNext(): void {
     const trackList = this.nowPlaying.getValue().trackList;
     if(this.currentlyPlayingIndex < trackList.length - 1) {
-      this.updateNowPlaying(trackList[this.currentlyPlayingIndex + 1], trackList);
+      this.updateNowPlaying(trackList[this.currentlyPlayingIndex + 1], trackList, this.nowPlaying.getValue().idOfTracklist);
     }
   }
 
@@ -65,7 +67,7 @@ export class NowPlayingService {
     const trackList = this.nowPlaying.getValue().trackList;
     if(this.getPlayingCurrentTime() < 4) {
       if(this.currentlyPlayingIndex > 0) {
-        this.updateNowPlaying(trackList[this.currentlyPlayingIndex - 1], trackList);
+        this.updateNowPlaying(trackList[this.currentlyPlayingIndex - 1], trackList, this.nowPlaying.getValue().idOfTracklist);
       }
     } else {
       this.currentlyPlayingTrack.currentTime = 0;
@@ -93,6 +95,20 @@ export class NowPlayingService {
       this.currentlyPlayingTrack.pause();
     }
     this.currentlyPlayingTrack = new Audio(url);
+    this.setVolume(this.volumeLevel);
     this.play();
+  }
+
+  setVolume(level): void {
+    if(level < 0) {
+      this.volumeLevel = 0
+    } else if(level > 1) {
+      this.volumeLevel = 1;
+    } else {
+      this.volumeLevel = level;
+    }
+    if(this.currentlyPlayingTrack) {
+      this.currentlyPlayingTrack.volume = this.volumeLevel;
+    }
   }
 }

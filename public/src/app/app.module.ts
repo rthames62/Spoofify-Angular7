@@ -38,6 +38,13 @@ const routes: Routes = [
       preload: false
     }
   },
+  {
+    path: 'search',
+    loadChildren: './search/search.module#SearchModule',
+    data: {
+      preload: false
+    }
+  },
   { path: '', redirectTo: 'browse/featured', pathMatch: 'full' }
 ]
 

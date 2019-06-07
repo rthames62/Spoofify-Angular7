@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyConnectService } from 'src/app/shared/services/spotify.service';
 import { ActivatedRoute } from '@angular/router';
-import { Album, Track } from 'src/app/shared/types/spotify-types';
+import { Album, Track, Artist } from 'src/app/shared/types/spotify-types';
 
 @Component({
   selector: 'sc-overview',
@@ -10,6 +10,7 @@ import { Album, Track } from 'src/app/shared/types/spotify-types';
 })
 export class OverviewComponent implements OnInit {
 
+  artist: Artist;
   albums: Album[];
   singles: Album[];
   compilations: Album[];
@@ -19,82 +20,45 @@ export class OverviewComponent implements OnInit {
   constructor(private spotifyService: SpotifyConnectService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.route);
     this.route.data.subscribe(data => {
-      console.log(data);
-      this.resetAlbumData();
+      this.albums = data.albums[0].items;
+      this.singles = data.albums[1].items;
+      this.compilations = data.albums[2].items;
+      this.appearsOn = data.albums[3].items;
+      this.artist = data.artistData[0];
+      this.topTracks = data.artistData[1].tracks;
       this.loadAlbumData();
     })
   }
 
   private loadAlbumData(): void {
-    this.spotifyService.getArtistAlbums(this.route.snapshot.params.id).subscribe(albums => {
-      this.albums = albums.items;
-      if(albums.items) {
-        albums.items.forEach(album => {
-          this.spotifyService.getAlbumById(album.id).subscribe(res => {
-            album.tracks = {
-              items: res.tracks.items
-            }
-          })
-        });
-      }
+    this.albums.forEach(album => {
+      this.spotifyService.getAlbumById(album.id).subscribe(res => {
+        album.tracks = {
+          items: res.tracks.items
+        }
+      })
     });
-    this.spotifyService.getArtistAlbumSingles(this.route.snapshot.params.id).subscribe(singles => {
-      this.singles = singles.items;
-      if(singles.items) {
-        singles.items.forEach(album => {
-          this.spotifyService.getAlbumById(album.id).subscribe(res => {
-            album.tracks = {
-              items: res.tracks.items
-            }
-          })
-        });
-      }
+    this.singles.forEach(album => {
+      this.spotifyService.getAlbumById(album.id).subscribe(res => {
+        album.tracks = {
+          items: res.tracks.items
+        }
+      })
     });
-    this.spotifyService.getArtistByTopTracks(this.route.snapshot.params.id).subscribe(tracks => {
-      this.topTracks = tracks.items;
-      if(tracks.items) {
-        tracks.items.forEach(album => {
-          this.spotifyService.getAlbumById(album.id).subscribe(res => {
-            album.tracks = {
-              items: res.tracks.items
-            }
-          })
-        });
-      }
+    this.compilations.forEach(album => {
+      this.spotifyService.getAlbumById(album.id).subscribe(res => {
+        album.tracks = {
+          items: res.tracks.items
+        }
+      })
     });
-    this.spotifyService.getArtistAlbumCompilations(this.route.snapshot.params.id).subscribe(compilations => {
-      this.compilations = compilations.items;
-      if(compilations.items) {
-        compilations.items.forEach(album => {
-          this.spotifyService.getAlbumById(album.id).subscribe(res => {
-            album.tracks = {
-              items: res.tracks.items
-            }
-          })
-        });
-      }
+    this.appearsOn.forEach(album => {
+      this.spotifyService.getAlbumById(album.id).subscribe(res => {
+        album.tracks = {
+          items: res.tracks.items
+        }
+      })
     });
-    this.spotifyService.getArtistAlbumAppearsOn(this.route.snapshot.params.id).subscribe(albums => {
-      this.appearsOn = albums.items;
-      if(albums.items) {
-        albums.items.forEach(album => {
-          this.spotifyService.getAlbumById(album.id).subscribe(res => {
-            album.tracks = {
-              items: res.tracks.items
-            }
-          })
-        });
-      }
-    });
-  }
-
-  private resetAlbumData(): void {
-    this.albums = [];
-    this.singles = [];
-    this.topTracks = [];
-    this.compilations = [];
-    this.appearsOn = [];
   }
 }

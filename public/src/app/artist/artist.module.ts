@@ -8,6 +8,7 @@ import { AlbumsListModule } from '../shared/albums-list/albums-list.module';
 import { RelatedArtistsComponent } from './related-artists/related-artists.component';
 import { RelatedArtistsResolverService } from './related-artists/resolver/related-artists-resolver.service';
 import { OverviewComponent } from './overview/overview.component';
+import { OverviewResolverService } from './overview/resolver/overview-resolver.service';
 
 @NgModule({
   declarations: [ ArtistComponent, RelatedArtistsComponent, OverviewComponent ],
@@ -20,13 +21,16 @@ import { OverviewComponent } from './overview/overview.component';
         path: ':id',
         component: ArtistComponent,
         resolve: {
-          artist: ArtistResolverService
+          artistData: ArtistResolverService
         },
         children: [
           {
             path: '',
             component: OverviewComponent,
-            outlet: 'artist'
+            outlet: 'artist',
+            resolve: {
+              albums: OverviewResolverService
+            }
           },
           {
             path: 'related',

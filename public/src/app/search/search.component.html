@@ -1,0 +1,51 @@
+<section class="search__wrapper">
+  <input #searchField 
+    (keyup)="search(searchField.value)"
+    class="search__search_box" 
+    type="search" 
+    placeholder="Start Typing...">
+</section>
+<section *ngIf="searchField.value.length < 3" class="search__intro">
+  <h1>Search Spotify</h1>
+  <p>Find your favorite songs, artists, albums, podcasts and playlists.</p>
+</section>
+<div *ngIf="results" class="search__results_wrapper">
+    <section class="featured" *ngIf="results.tracks.items.length > 0">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-3">
+            <div class="featured__top_playlist">
+              <sc-album-preview [playlist]="results.playlists.items[0]"></sc-album-preview>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 col-xl-9">
+            <sc-tracks-list [tracks]="results.tracks.items"></sc-tracks-list>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="artists" *ngIf="results.artists.items.length > 0">
+      <h1>Artists</h1>
+      <div class="container-fluid">
+        <div class="row">
+          <div *ngFor="let artist of results.artists.items" class="col-xs-6 col-sm-4 col-md-4 col-lg-3 col-xl-2">
+            <div class="artists__wrapper">
+                <a routerLink="/artist/{{ artist.id }}">
+                    <div *ngIf="artist.images.length > 0" class="cover_art rounded" [style.backgroundImage]="'url(' + artist.images[0].url + ')'"></div>
+                    <div *ngIf="artist.images.length === 0" class="cover_art rounded" [style.backgroundImage]="'url(./assets/default-artist.png)'"></div>
+                </a>
+                <a class="artists__link" routerLink="/artist/{{ artist.id }}">{{ artist.name }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="artists" *ngIf="results.albums.items.length > 0">
+      <h1>Albums</h1>
+      <sc-albums-list [albums]="results.albums.items"></sc-albums-list>
+    </section>
+    <section class="playlists" *ngIf="results.playlists.items.length > 0">
+      <h1>Playlists</h1>
+      <sc-albums-list [playlists]="results.playlists.items"></sc-albums-list>
+    </section>
+</div>

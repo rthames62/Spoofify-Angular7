@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Update gradient color to match album/playlist
     this.backgroundService.backgroundColor$.subscribe(color => {
+      console.log(color);
       this.backgroundColor = this.setGradient(color);
     });
 
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   setGradient(hex: string): object {
-    const style = { 'background': `linear-gradient(to right bottom, #${hex} -100%, rgb(0, 0, 0) 100%), linear-gradient(transparent, rgb(0, 0, 0) 70%)` };
+    const style = { 'background': `linear-gradient(to right bottom, #${hex} -50%, rgb(0, 0, 0) 100%), linear-gradient(transparent, rgb(0, 0, 0) 70%)` };
 
     return style;
   }

@@ -10,9 +10,10 @@ import { Track } from '../types/spotify-types';
 })
 export class TracksListComponent implements OnInit, OnChanges {
 
-  @Input('tracks') tracks;
-  @Input('type') type: 'popular' | 'full-detail' | 'less-detail';
-  tracksList;
+  @Input() tracks: Track[];
+  @Input() id: string;
+  @Input() type: 'popular' | 'full-detail' | 'less-detail';
+  tracksList: Track[];
   currentlyPlaying: boolean = false;
 
   constructor(private nowPlayingService: NowPlayingService) {
@@ -43,7 +44,7 @@ export class TracksListComponent implements OnInit, OnChanges {
   }
 
   updateNowPlaying(track: Track): void {
-    this.nowPlayingService.updateNowPlaying(track, this.tracksList);
+    this.nowPlayingService.updateNowPlaying(track, this.tracksList, this.id);
   }
 
   convertDuration(millis: number): string {

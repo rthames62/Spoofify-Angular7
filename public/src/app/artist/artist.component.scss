@@ -1,5 +1,6 @@
 @import '../../sass/output.scss';
 @import '../../sass/components/buttons';
+@import '../../sass/components/sub-nav';
 
 .artist_header {
     display: flex;
@@ -42,43 +43,6 @@
 
     &__name {
         margin: 10px 0;
-    }
-
-    &__nav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute !important;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        ol {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding-bottom: 20px;
-        }
-
-        a {
-            @extend .dim-link;
-            padding: 10px 20px 0;
-            position: relative;
-            font-size: 14px;
-            line-height: 16px;
-            font-weight: $weight-medium;
-            letter-spacing: .2px;
-            display: inline-block;
-
-            &.active {
-                opacity: 1;
-
-                &::after {
-                    @include active-link;
-                }
-            }
-        }
     }
 }
 

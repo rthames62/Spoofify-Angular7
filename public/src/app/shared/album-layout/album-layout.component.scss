@@ -4,12 +4,11 @@
 @import '../../../sass/components/buttons';
 
 .album_header {
-    display: flex;
     padding-bottom: 30px;
     border-bottom: 1px solid rgba($color-neutral, .2);
 
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(xl) {
         position: sticky;
         top: 0;
         text-align: center;
@@ -66,6 +65,11 @@
         @include media-breakpoint-up(lg) {
             order: -2;
         }
+
+        h2 {
+            font-size: 34px;
+            line-height: 42px;
+        }
     }
 }
 
@@ -80,4 +84,10 @@
 
 .album_info {
 
+}
+
+::ng-deep {
+    .album__name, .artist {
+        display: none;
+    }
 }

@@ -9,7 +9,8 @@ import { fromEvent } from 'rxjs';
 })
 export class AlbumsListComponent implements OnInit {
 
-  @Input('albums') albums;
+  @Input() albums;
+  @Input() playlists;
   length: number = 8;
   sliceLength: number;
 

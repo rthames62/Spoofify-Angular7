@@ -22,3 +22,20 @@ main {
     will-change: transform;
     opacity: 1;
 }
+
+.banner {
+    @include linear-gradient(90deg, $color-accent-tertiary, $color-accent-secondary);
+    position: fixed;
+    bottom: 90px;
+    left: 0;
+    width: 100vw;
+    height: 70px;
+
+    &__preview {
+        font-size: 11px;
+        line-height: 16px;
+        letter-spacing: 1px;
+        font-weight: $weight-light;
+        color: $white;
+    }
+}
