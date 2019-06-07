@@ -1,21 +1,21 @@
 <article class="album_wrapper" *ngIf="album || playlist">
   <div class="album" [ngClass]="{ playing: currentlyPlayingFlag && currentlyPlayingInAlbum }">
-    <div class="album__cover_art">
+    <div class="album--cover_art">
         <div *ngIf="album" class="cover_art" [style.backgroundImage]="'url(' + album.images[0].url + ')'"></div>
         <div *ngIf="playlist" class="cover_art" [style.backgroundImage]="'url(' + playlist.images[0].url + ')'"></div>
-        <div class="album__playback">
-          <div (click)="currentlyPlayingFlag && currentlyPlayingInAlbum ? pause() : play()" class="player_controls__play">
+        <div class="album--playback">
+          <div (click)="currentlyPlayingFlag && currentlyPlayingInAlbum ? pause() : play()" class="player_controls--play">
               <i class="fas" [ngClass]="currentlyPlayingFlag && currentlyPlayingInAlbum ? 'fa-pause' : 'fa-play'"></i>
           </div>
         </div>
     </div>
-    <div class="album__name_wrapper">
-        <a *ngIf="album" class="album__name" routerLink="/album/{{ album.id }}">{{ album.name }}</a>
-        <a *ngIf="playlist" class="album__name" routerLink="/playlist/{{ playlist.id }}">{{ playlist.name }}</a>
+    <div class="album--name_wrapper">
+        <a *ngIf="album" class="album--name" routerLink="/album/{{ album.id }}">{{ album.name }}</a>
+        <a *ngIf="playlist" class="album--name" routerLink="/playlist/{{ playlist.id }}">{{ playlist.name }}</a>
     </div>
   </div>
   <div class="artist">
-    <a *ngIf="album" class="artist__name" routerLink="/artist/{{ album.artists[0].id }}">{{ album.artists[0].name }}</a>
-    <span *ngIf="playlist" class="artist__name">{{ playlist.owner.display_name }}</span>
+    <a *ngIf="album" class="artist--name" routerLink="/artist/{{ album.artists[0].id }}">{{ album.artists[0].name }}</a>
+    <span *ngIf="playlist" class="artist--name">{{ playlist.owner.display_name }}</span>
   </div>
 </article>

@@ -32,23 +32,23 @@
         }
     }
 
-    &__info {
+    &--info {
         flex: 1;
         overflow: hidden;
     }
 
-    &__name {
+    &--name {
         font-size: 15px;
         line-height: 24px;
         letter-spacing: .5px;
         color: $white;
     }
 
-    &__icons {
+    &--icons {
 
     }
 
-    &__artist {
+    &--artist {
         display: flex;
         align-items: center;
         line-height: 15px;
@@ -64,7 +64,7 @@
         }
     }
 
-    &__explicit_label {
+    &--explicit_label {
         font-size: 11px;
         line-height: 16px;
         letter-spacing: .3px;
@@ -78,18 +78,18 @@
         margin-right: 5px;
     }
 
-    &__duration {
+    &--duration {
         width: 60px;
         text-align: right;
     }
 
-    &__cover_art_wrapper {
+    &--cover_art_wrapper {
         margin-right: 10px;
         width: 56px;
     }
 
     &.currently-playing {
-        .track__name, .track__duration, .play_controls_icons, .track__icons {
+        .track--name, .track--duration, .play_controls_icons, .track--icons {
             color: $color-accent;
         }
     }

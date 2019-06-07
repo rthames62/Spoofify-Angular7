@@ -9,20 +9,20 @@
                 <sc-album-preview *ngIf="playlist" [playlist]="playlist"></sc-album-preview>
             </div>
             <div class="col-md-8 col-lg-8 col-xl-12">
-              <div class="album_header__info">
-                <div class="album_header__album_info">
+              <div class="album_header--info">
+                <div class="album_header--album_info">
                     <h2>{{ album ? album.name : playlist.name }}</h2>
                     <p>
-                      <span class="album_header__by">
+                      <span class="album_header--by">
                         By 
                       </span>
-                      <a *ngIf="album" routerLink="/artist/{{ album.artists[0].id }}" class="album_header__owner">{{ album.artists[0].name }}</a>
-                      <a *ngIf="playlist" routerLink="/playlist/{{ playlist.id }}" class="album_header__owner">{{ playlist?.owner.display_name }}</a>
+                      <a *ngIf="album" routerLink="/artist/{{ album.artists[0].id }}" class="album_header--owner">{{ album.artists[0].name }}</a>
+                      <a *ngIf="playlist" routerLink="/playlist/{{ playlist.id }}" class="album_header--owner">{{ playlist?.owner.display_name }}</a>
                     </p>
                 </div>
-                <p class="album_header__description">{{ playlist?.description }}</p>
-                <p class="album_header__amount">{{ tracks.length }} songs</p>
-                <div class="album_header__controls">
+                <p class="album_header--description">{{ playlist?.description }}</p>
+                <p class="album_header--amount">{{ tracks.length }} songs</p>
+                <div class="album_header--controls">
                   <button (click)="currentlyPlayingFlag && currentlyPlayingInTrackList ? pause() : play()" class="play">
                     {{ currentlyPlayingFlag && currentlyPlayingInTrackList ? 'Pause' : 'Play' }}
                   </button>

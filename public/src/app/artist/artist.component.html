@@ -1,7 +1,7 @@
 <header [ngStyle]="artistImage" class="artist_header" *ngIf="artist">
-  <span class="artist_header__followers">{{ artist.followers.total | number }} Monthly Listeners</span>
-  <h1 class="artist_header__name large">{{ artist.name }}</h1>
-  <div class="artist_header__controls">
+  <span class="artist_header--followers">{{ artist.followers.total | number }} Monthly Listeners</span>
+  <h1 class="artist_header--name large">{{ artist.name }}</h1>
+  <div class="artist_header--controls">
     <button (click)="currentlyPlayingFlag && currentlyPlayingArtist ? pause() : play()" class="play">
       {{ currentlyPlayingFlag && currentlyPlayingArtist ? 'Pause' : 'Play' }}
     </button>

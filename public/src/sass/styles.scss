@@ -79,7 +79,7 @@ a {
         color: inherit;
     }
 
-    &.section__cta {
+    &.section--cta {
         color: $color-neutral;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -87,7 +87,7 @@ a {
     }
 }
 
-.flex__wrapper {
+.flex--wrapper {
     @include flex();
     flex-wrap: wrap;
 }

@@ -18,21 +18,21 @@
         margin: auto;
     }
 
-    &__by {
+    &--by {
         @include dim-text;
     }
 
-    &__owner {
+    &--owner {
         color: $white;
     }
 
-    &__description {
+    &--description {
         @include dim-text;
         margin-bottom: 15px;
         line-height: 20px;
     }
 
-    &__amount {
+    &--amount {
         @include dim-text;
         font-size: 11px;
         line-height: 16px;
@@ -41,7 +41,7 @@
         text-transform: uppercase;
     }
 
-    &__controls {
+    &--controls {
         margin-top: 20px;
 
         @include media-breakpoint-up(lg) {
@@ -50,7 +50,7 @@
         }
     }
 
-    &__info {
+    &--info {
         margin-left: 30px;
 
         @include media-breakpoint-up(lg) {
@@ -60,7 +60,7 @@
         }
     }
 
-    &__album_info {
+    &--album_info {
 
         @include media-breakpoint-up(lg) {
             order: -2;
@@ -87,7 +87,7 @@
 }
 
 ::ng-deep {
-    .album__name, .artist {
+    .album--name, .artist {
         display: none;
     }
 }

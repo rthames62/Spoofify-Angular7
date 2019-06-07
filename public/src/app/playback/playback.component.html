@@ -1,49 +1,49 @@
 <footer class="playback">
   <div class="now_playing">
-    <div class="now_playing__album_info">
+    <div class="now_playing--album_info">
         <div class="cover_art_wrapper">
             <div *ngIf="nowPlaying" class="cover_art" [style.backgroundImage]="'url(' + nowPlaying.track.album.images[0].url + ')'"></div>
         </div>
         <div *ngIf="nowPlaying" class="currently_playing ellipsis_one_line">
-            <div class="currently_playing__track_name ellipsis_one_line">
+            <div class="currently_playing--track_name ellipsis_one_line">
                 <a routerLink="/album/{{ nowPlaying.track.album.id }}">{{ nowPlaying.track.name }}</a>
             </div>
-            <div class="currently_playing__artist_name ellipsis_one_line">
+            <div class="currently_playing--artist_name ellipsis_one_line">
                 <a routerLink="/album/{{ nowPlaying.track.album.id }}">{{ nowPlaying.track.artists[0].name }}</a>
             </div>
         </div>
     </div>
     <div class="player_controls_wrapper">
       <div class="player_controls">
-        <div class="player_controls__shuffle">
+        <div class="player_controls--shuffle">
             <i class="fas fa-random"></i>
         </div>
-        <div class="player_controls__previous">
+        <div class="player_controls--previous">
             <i (click)="playPrevious()" class="fas fa-step-backward"></i>
         </div>
-        <div class="player_controls__play small">
+        <div class="player_controls--play small">
             <i (click)="currentlyPlayingFlag ? pause() : play()" class="fas" [ngClass]="currentlyPlayingFlag ? 'fa-pause' : 'fa-play'"></i>
         </div>
-        <div class="player_controls__next">
+        <div class="player_controls--next">
             <i (click)="playNext()" class="fas fa-step-forward"></i>
         </div>
-        <div class="player_controls__repeat">
+        <div class="player_controls--repeat">
             <i class="fas fa-redo-alt"></i>
         </div>
       </div>
       <div class="playback_bar">
-        <div class="playback_bar__time">{{ currentlyPlayingProgress }}</div>
-        <div class="playback_bar__progress_bar_wrapper">
-          <div [ngClass]="{ 'no-transition': nextSongTransition }" [style.width.%]="progressBarTime" class="playback_bar__progress_bar"></div>
+        <div class="playback_bar--time">{{ currentlyPlayingProgress }}</div>
+        <div class="playback_bar--progress_bar_wrapper">
+          <div [ngClass]="{ 'no-transition': nextSongTransition }" [style.width.%]="progressBarTime" class="playback_bar--progress_bar"></div>
         </div>
-        <div class="playback_bar__time">{{ currentlyPlayingDurationDisplay }}</div>
+        <div class="playback_bar--time">{{ currentlyPlayingDurationDisplay }}</div>
       </div>
     </div>
-    <div class="now_playing__volume_controls">
+    <div class="now_playing--volume_controls">
       <i (click)="toggleVolume()" class="fas" [ngClass]="volume === 0 ? 'fa-volume-mute' : 'fa-volume-up'"></i>
-      <div id="slider-wrapper" (click)="changeVolume($event)" class="volume__slider_wrapper">
-        <div [style.width.px]="volume" class="volume__slider_control">
-          <span #volumeHandle class="volume__handle"></span>
+      <div id="slider-wrapper" (click)="changeVolume($event)" class="volume--slider_wrapper">
+        <div [style.width.px]="volume" class="volume--slider_control">
+          <span #volumeHandle class="volume--handle"></span>
         </div>
       </div>
     </div>

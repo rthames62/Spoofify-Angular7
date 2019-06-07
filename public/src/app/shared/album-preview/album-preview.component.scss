@@ -15,28 +15,28 @@
             @include transition(.2s ease filter);
         }
 
-        .player_controls__play {
+        .player_controls--play {
             display: block;
         }
     }
     
-    &__cover_art {
+    &--cover_art {
         margin-bottom: 10px;
         position: relative;
     }
 
-    &__name_wrapper {
+    &--name_wrapper {
         @extend .ellipsis_one_line;
     }
 
-    &__name {
+    &--name {
         color: $white;
         line-height: 20px;
         letter-spacing: .2px;
         font-weight: $weight-medium;
     }
 
-    &__playback {
+    &--playback {
         @extend .flex-all-center;
         position: absolute;
         top: 0;
@@ -50,7 +50,7 @@
         height: auto;
     }
 
-    .player_controls__play {
+    .player_controls--play {
         display: none;
     }
 
@@ -61,7 +61,7 @@
             @include transition(.2s ease filter);
         }
 
-        .player_controls__play {
+        .player_controls--play {
             display: block;
         }
     }
@@ -69,7 +69,7 @@
 
 .artist {
 
-    &__name {
+    &--name {
         @extend .dim-link;
         line-height: 24px;
 

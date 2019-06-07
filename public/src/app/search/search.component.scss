@@ -4,19 +4,19 @@
 
 .artists {
 
-    &__wrapper {
+    &--wrapper {
         margin-bottom: 30px;
         text-align: center;
     }
 
-    &__link {
+    &--link {
         display: block;
         padding-top: 20px;
     }
 }
 
 .search {
-    &__wrapper {
+    &--wrapper {
         position: fixed;
         top: 0;
         right: 0;
@@ -27,7 +27,7 @@
         z-index: 15;
     }
 
-    &__search_box {
+    &--search_box {
         font-size: 36px;
         line-height: 44px;
         color: $white;
@@ -43,13 +43,13 @@
         }
     }
 
-    &__intro {
+    &--intro {
         @extend .flex-all-center;
         flex-direction: column;
         height: 400px;
     }
 
-    &__results_wrapper {
+    &--results_wrapper {
         margin-top: 150px;
     }
 }

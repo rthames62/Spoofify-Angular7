@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-3">
-        <div class="featured__top_playlist">
+        <div class="featured--top_playlist">
           <sc-album-preview [playlist]="playlists[0]"></sc-album-preview>
         </div>
       </div>
@@ -17,12 +17,12 @@
   <div class="container-fluid">
     <div class="row">
       <div *ngFor="let artist of artists" class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
-        <div class="artists__wrapper">
+        <div class="artists--wrapper">
             <a routerLink="/artist/{{ artist.id }}">
                 <div *ngIf="artist.images.length > 0" class="cover_art rounded" [style.backgroundImage]="'url(' + artist.images[0].url + ')'"></div>
                 <div *ngIf="artist.images.length === 0" class="cover_art rounded" [style.backgroundImage]="'url(./assets/default-artist.png)'"></div>
             </a>
-            <a class="artists__link" routerLink="/artist/{{ artist.id }}">{{ artist.name }}</a>
+            <a class="artists--link" routerLink="/artist/{{ artist.id }}">{{ artist.name }}</a>
         </div>
       </div>
     </div>

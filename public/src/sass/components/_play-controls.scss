@@ -5,7 +5,7 @@
     width: 224px;
     margin-bottom: 12px;
 
-    &__play {
+    &--play {
         @include transition(.2s ease transform);
     
         &:hover {

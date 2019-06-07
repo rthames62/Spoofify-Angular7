@@ -7,7 +7,7 @@
 .artist {
     margin-bottom: 40px;
 
-    &__image {
+    &--image {
         width: 100%;
         border-radius: 50%;
         height: 100%;
@@ -16,7 +16,7 @@
         margin-bottom: 15px;
     }
 
-    &__name {
+    &--name {
         font-size: 14px;
         line-height: 20px;
         letter-spacing: .2px;

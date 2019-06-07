@@ -28,7 +28,7 @@
         position: relative;
     }
 
-    &__followers {
+    &--followers {
         @include dim-text;
         font-size: 13px;
         line-height: 16px;
@@ -36,12 +36,12 @@
         margin-bottom: 15px;
     }
 
-    &__controls {
+    &--controls {
         position: relative;
         margin-top: 20px;
     }
 
-    &__name {
+    &--name {
         margin: 10px 0;
     }
 }
