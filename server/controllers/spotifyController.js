@@ -42,7 +42,7 @@ const getFeaturedPlaylists = (req, res) => {
         if(!err && response.statusCode === 200) {
             res.json(body);
         } else {
-            res.json(err);
+            res.json('Error');
         }
     })
 }
