@@ -8,6 +8,12 @@ const spotifyController = require('./controllers/spotifyController');
 app.use(cors());
 spotifyController.authorizeSpotify();
 
+app.use(express.static(__dirname + '/dist/Spoofify'));
+
+app.get('/*', function(req,res) {
+    res.sendFile(path.join(__dirname+'/dist/Spoofify/index.html'));
+});
+
 app.get('/api/spotify/categories', spotifyController.getCategories);
 app.get('/api/spotify/featured-playlists', spotifyController.getFeaturedPlaylists);
 app.get('/api/spotify/recommendations', spotifyController.getRecommendations);
