@@ -8,6 +8,8 @@ const spotifyController = require('./controllers/spotifyController');
 app.use(cors());
 spotifyController.authorizeSpotify();
 
+console.log(__dirname + 'dist/Spoofify')
+
 app.use(express.static(__dirname + '/dist/Spoofify'));
 
 app.get('/*', function(req,res) {
