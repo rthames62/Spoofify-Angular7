@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  serverBaseUrl: 'http://localhost:3000/api',
+  serverBaseUrl: 'https://spoofify-api.herokuapp.com/api',
   spotifyApiBaseUrl: 'https://api.spotify.com/v1'
 };
 

@@ -8,11 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GenresComponent implements OnInit {
 
+  genres;
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       console.log(data);
+      this.genres = data.genres.items;
     })
   }
 
