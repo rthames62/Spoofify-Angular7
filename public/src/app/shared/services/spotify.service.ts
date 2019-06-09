@@ -28,6 +28,12 @@ export class SpotifyConnectService {
     )
   }
 
+  getBrowseGenres(): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/browse/categories`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
   getRecommendations(): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/recommendations`).pipe(
       map((res: any) => JSON.parse(res._body))

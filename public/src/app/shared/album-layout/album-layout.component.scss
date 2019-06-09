@@ -87,7 +87,9 @@
 }
 
 ::ng-deep {
-    .album--name, .artist {
-        display: none;
+    .album_wrapper {
+        .album--name, .artist {
+            display: none;
+        }
     }
 }

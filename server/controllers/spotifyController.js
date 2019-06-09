@@ -2,6 +2,9 @@
 const request = require('request');
 const baseUri = 'https://api.spotify.com/v1';
 
+console.log(process.env.clientid);
+console.log(process.env.clientkey);
+
 const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {

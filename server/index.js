@@ -1,14 +1,13 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const port = 3000;
 
 const spotifyController = require('./controllers/spotifyController');
 
 app.use(cors());
 spotifyController.authorizeSpotify();
 
-console.log('API 11111111111111');
+// console.log(process.env);
 
 app.get('/api/spotify/categories', spotifyController.getCategories);
 app.get('/api/spotify/featured-playlists', spotifyController.getFeaturedPlaylists);
@@ -24,4 +23,4 @@ app.get('/api/spotify/artist/:id/related-artists', spotifyController.getArtistRe
 app.get('/api/spotify/album/:id', spotifyController.getAlbumById);
 app.get('/api/spotify/search/:q', spotifyController.searchSpotify);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}`));
+app.listen(process.env.PORT || 8080, () => console.log(`Example app listening on port ${process.env.PORT || 8080}`));
