@@ -5,7 +5,7 @@
   "proxy": "http://localhost:3000",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "node server.js && node server/index.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
