@@ -10,10 +10,10 @@ spotifyController.authorizeSpotify();
 
 console.log(__dirname + 'dist/Spoofify')
 
-app.use(express.static(__dirname + '/dist/Spoofify'));
+app.use(express.static('/app/dist/Spoofify'));
 
 app.get('/*', function(req,res) {
-    res.sendFile(path.join(__dirname + '/dist/Spoofify/index.html'));
+    res.sendFile(path.join('app/dist/Spoofify/index.html'));
 });
 
 app.get('/api/spotify/categories', spotifyController.getCategories);
