@@ -8,6 +8,7 @@ const app = express();
 app.use(express.static(__dirname + '/dist/Spoofify'));
 
 console.log(__dirname+'/dist/Spoofify');
+console.log(process.env);
 
 app.get('/*', function(req,res) {
     
