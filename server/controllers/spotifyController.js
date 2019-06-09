@@ -1,11 +1,11 @@
-const keys = require('../keys');
+// const keys = require('../keys');
 const request = require('request');
 const baseUri = 'https://api.spotify.com/v1';
 
 const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {
-        'Authorization': 'Basic ' + (new Buffer(keys.spotify.client_id + ':' + keys.spotify.client_secret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer(process.env.clientid + ':' + process.env.clientkey).toString('base64'))
     },
     form: {
         grant_type: 'client_credentials'
