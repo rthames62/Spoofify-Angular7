@@ -7,8 +7,7 @@ const app = express();
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/Spoofify'));
 
-console.log(__dirname+'/dist/Spoofify');
-console.log(process.env);
+console.log('SERVER 22222222222');
 
 app.get('/*', function(req,res) {
     
