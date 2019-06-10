@@ -29,6 +29,10 @@ export class NowPlayingService {
   currentlyPlayingProgress$: Observable<any>;
   currentlyPlayingIndex: number;
   volumeLevel: number = 1;
+  shuffleOn: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  shuffleOn$: Observable<boolean> = this.shuffleOn.asObservable();
+  repeatOn: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  repeatOn$: Observable<boolean> = this.repeatOn.asObservable();
 
   constructor(private recentlyPlayedService: RecentlyPlayedService) { }
 
@@ -42,6 +46,9 @@ export class NowPlayingService {
         }
       })
       this.nowPlaying.next({ track: track, trackList: tracksWithPreview, idOfTracklist });
+      if(this.shuffleOn.getValue()) {
+        this.shuffleTracklist();
+      }
       this.recentlyPlayedService.addToRecentlyPlayed(track);
     }
   }
@@ -58,10 +65,14 @@ export class NowPlayingService {
     this.currentlyPlaying.next(false);
   }
 
-  playNext(): void {
+  playNext(type?: string): void {
     const trackList = this.nowPlaying.getValue().trackList;
-    if(this.currentlyPlayingIndex < trackList.length - 1) {
-      this.updateNowPlaying(trackList[this.currentlyPlayingIndex + 1], trackList, this.nowPlaying.getValue().idOfTracklist);
+    if(this.repeatOn.getValue() && type === 'auto') {
+      this.updateNowPlaying(trackList[this.currentlyPlayingIndex], trackList, this.nowPlaying.getValue().idOfTracklist);
+    } else {
+      if(this.currentlyPlayingIndex < trackList.length - 1) {
+        this.updateNowPlaying(trackList[this.currentlyPlayingIndex + 1], trackList, this.nowPlaying.getValue().idOfTracklist);
+      }
     }
   }
 
@@ -113,4 +124,10 @@ export class NowPlayingService {
       this.currentlyPlayingTrack.volume = this.volumeLevel;
     }
   }
+
+  shuffleTracklist(): void {
+    this.nowPlaying.getValue().trackList.sort(() => Math.random() - 0.5);
+  }
+
+
 }

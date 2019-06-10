@@ -16,7 +16,7 @@
     <div class="player_controls_wrapper">
       <div class="player_controls">
         <div class="player_controls--shuffle">
-            <i class="fas fa-random"></i>
+            <i (click)="toggleShuffle()" class="fas fa-random" [ngClass]="{ on: shuffleOn }"></i>
         </div>
         <div class="player_controls--previous">
             <i (click)="playPrevious()" class="fas fa-step-backward"></i>
@@ -28,7 +28,7 @@
             <i (click)="playNext()" class="fas fa-step-forward"></i>
         </div>
         <div class="player_controls--repeat">
-            <i class="fas fa-redo-alt"></i>
+            <i (click)="toggleRepeat()" class="fas fa-redo-alt" [ngClass]="{ on: repeatOn }"></i>
         </div>
       </div>
       <div class="playback_bar">

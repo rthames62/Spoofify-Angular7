@@ -83,6 +83,14 @@
     width: 40%;
 }
 
+.player_controls {
+    i {
+        &.on {
+            color: $color-accent;
+        }
+    }
+}
+
 .currently_playing {
     display: flex;
     flex-direction: column;

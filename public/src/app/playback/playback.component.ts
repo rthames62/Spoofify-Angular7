@@ -32,6 +32,8 @@ export class PlaybackComponent implements OnInit {
   mouseDown: boolean = false;
   mouseMove$: Observable<any> = fromEvent(window, 'mousemove').pipe(filter(e => this.mouseDown));
   startingX: number;
+  shuffleOn: boolean = false;
+  repeatOn: boolean = false;
 
   constructor(private nowPlayingService: NowPlayingService) { }
 
@@ -88,6 +90,11 @@ export class PlaybackComponent implements OnInit {
       } 
       this.startingX = e.x;
     });
+    this.nowPlayingService.shuffleOn$.subscribe(val => this.shuffleOn = val);
+    this.nowPlayingService.repeatOn$.subscribe(val => {
+      this.repeatOn = val;
+      console.log(val);
+    });
   }
 
   pause(): void {
@@ -125,7 +132,7 @@ export class PlaybackComponent implements OnInit {
       this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(this.currentlyPlayingDurationSeconds);
       if(Math.floor(this.currentlyPlayingDurationSeconds) === 0) {
         this.resetProgressBar();
-        this.nowPlayingService.playNext();
+        this.nowPlayingService.playNext('auto');
       }
     })
   }
@@ -150,6 +157,14 @@ export class PlaybackComponent implements OnInit {
       this.volume = 0;
     }
     this.setVolume();
+  }
+
+  toggleShuffle(): void {
+    this.nowPlayingService.shuffleOn.next(!this.nowPlayingService.shuffleOn.getValue());
+  }
+
+  toggleRepeat(): void {
+    this.nowPlayingService.repeatOn.next(!this.nowPlayingService.repeatOn.getValue());
   }
 
   private setVolume(): void {
