@@ -25,6 +25,7 @@ export class SearchComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+    this.backgroundService.updateBackgroundColor();
     this.searchField.nativeElement.focus();
     this.searchSubject.pipe(debounceTime(500)).subscribe(search => {
       this.spotifySerivce.searchSpotify(search).subscribe(results => {

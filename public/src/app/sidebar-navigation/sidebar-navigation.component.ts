@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RecentlyPlayedService } from '../shared/services/recently-played.service';
 
 @Component({
   selector: 'sc-sidebar-navigation',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarNavigationComponent implements OnInit {
 
-  constructor() { }
+  recentlyPlayed: any[];
+
+  constructor(private recentlyPlayedService: RecentlyPlayedService) { }
 
   ngOnInit() {
+    this.recentlyPlayedService.recentlyPlayed$.subscribe(val => this.recentlyPlayed = val);
   }
 
 }

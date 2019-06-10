@@ -26,6 +26,7 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
     if(this.playlist) {
       this.playlist.tracks.items.forEach(track => this.tracks.push(track.track));
       this.hasPreviews = checkForPreviews(this.tracks);
+      this.backgroundService.updateBackgroundColor(this.playlist.images[0].url);
     } else if(this.album) {
       this.tracks = this.album.tracks.items;
       this.tracks.forEach(track => {
@@ -35,6 +36,7 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
         }
       })
       this.hasPreviews = checkForPreviews(this.tracks);
+      this.backgroundService.updateBackgroundColor(this.album.images[0].url);
     }
 
     this.nowPlayingService.nowPlaying$.subscribe(nowPlaying => {

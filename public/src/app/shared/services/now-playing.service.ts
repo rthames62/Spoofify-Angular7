@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { Track } from '../types/spotify-types';
 import { removeTracksWithoutPreview } from "../core/utils";
+import { RecentlyPlayedService } from './recently-played.service';
 
 export interface NowPlaying {
   track?: Track,
@@ -29,7 +30,7 @@ export class NowPlayingService {
   currentlyPlayingIndex: number;
   volumeLevel: number = 1;
 
-  constructor() { }
+  constructor(private recentlyPlayedService: RecentlyPlayedService) { }
 
   updateNowPlaying(track: Track, trackList?: Track[], idOfTracklist?: string): void {
     const tracksWithPreview = removeTracksWithoutPreview(trackList);
@@ -41,6 +42,7 @@ export class NowPlayingService {
         }
       })
       this.nowPlaying.next({ track: track, trackList: tracksWithPreview, idOfTracklist });
+      this.recentlyPlayedService.addToRecentlyPlayed(track);
     }
   }
 

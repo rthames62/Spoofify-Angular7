@@ -18,4 +18,17 @@
       </div>
     </a>
   </section>
+  <section class="recently_played">
+    <p class="recently_played--title">Recently Played</p>
+    <ul>
+      <li *ngFor="let item of recentlyPlayed" class="recently_played--item_wrapper">
+        <p class="recently_played--track_name ellipsis_one_line">{{ item.name }}</p>
+        <div class="ellipsis_one_line">
+          <a *ngFor="let artist of item.artists; let last = last" class="recently_played--artist_link" routerLink="/artist/{{ artist.id }}">
+            {{ artist.name }}<ng-container *ngIf="!last">, </ng-container>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </section>
 </aside>
