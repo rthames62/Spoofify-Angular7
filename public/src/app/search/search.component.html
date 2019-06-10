@@ -9,7 +9,7 @@
   <h1>Search Spotify</h1>
   <p>Find your favorite songs, artists, albums, podcasts and playlists.</p>
 </section>
-<div *ngIf="results" class="search--results_wrapper">
+<div *ngIf="results && searchField.value.length > 2" class="search--results_wrapper">
     <section class="featured" *ngIf="results.tracks.items.length > 0">
       <div class="container-fluid">
         <div class="row">

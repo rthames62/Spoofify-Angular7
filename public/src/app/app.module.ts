@@ -45,7 +45,7 @@ const routes: Routes = [
       preload: false
     }
   },
-  { path: '', redirectTo: 'browse/featured', pathMatch: 'full' }
+  { path: '', redirectTo: 'browse', pathMatch: 'full' }
 ]
 
 @NgModule({

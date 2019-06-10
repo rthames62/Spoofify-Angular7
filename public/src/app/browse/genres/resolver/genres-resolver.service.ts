@@ -12,13 +12,13 @@ export class GenresResolverService {
   constructor(private spotifyService: SpotifyConnectService, private router: Router) { }
 
   resolve(route: ActivatedRoute) {
-    return this.spotifyService.getBrowseCategories().pipe(
+    return this.spotifyService.getBrowseGenres().pipe(
       take(1),
       mergeMap(category => {
         if(category) {
           return of(category);
         } else {
-          this.router.navigate(['/browse/featured']);
+          this.router.navigate(['/browse']);
           return EMPTY;
         }
       })

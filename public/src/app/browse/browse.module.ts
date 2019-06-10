@@ -8,15 +8,19 @@ import { FeaturedResolverService } from './featured/resolver/featured-resolver.s
 import { GenresComponent } from './genres/genres.component';
 import { GenresResolverService } from './genres/resolver/genres-resolver.service';
 import { AlbumsListModule } from '../shared/albums-list/albums-list.module';
+import { GenreDetailsComponent } from './genres/genre-details/genre-details.component';
+import { GenreDetailsResolverService } from './genres/genre-details/resolver/genre-details-resolver.service';
+import { NewReleasesComponent } from './new-releases/new-releases.component';
+import { NewReleasesResolverService } from './new-releases/resolver/new-releases-resolver.service';
 
 @NgModule({
-  declarations: [ BrowseComponent, FeaturedComponent, BrowseNavComponent, GenresComponent ],
+  declarations: [ BrowseComponent, FeaturedComponent, BrowseNavComponent, GenresComponent, GenreDetailsComponent, NewReleasesComponent ],
   imports: [
     CommonModule,
     AlbumsListModule,
     RouterModule.forChild([
       {
-        path: 'featured',
+        path: '',
         component: FeaturedComponent,
         resolve: {
           playlists: FeaturedResolverService
@@ -27,6 +31,20 @@ import { AlbumsListModule } from '../shared/albums-list/albums-list.module';
         component: GenresComponent,
         resolve: {
           genres: GenresResolverService
+        }
+      },
+      {
+        path: 'genres/:id',
+        component: GenreDetailsComponent,
+        resolve: {
+          playlists: GenreDetailsResolverService
+        }
+      },
+      {
+        path: 'new-releases',
+        component: NewReleasesComponent,
+        resolve: {
+          newReleases: NewReleasesResolverService
         }
       }
     ])

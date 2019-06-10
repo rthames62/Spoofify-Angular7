@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { Track, Album, Playlist } from '../types/spotify-types';
 import { NowPlayingService } from '../services/now-playing.service';
 import { MainBackgroundService } from '../services/main-background.service';
-import { removeTracksWithoutPreview } from "../core/utils";
+import { removeTracksWithoutPreview, checkForPreviews } from "../core/utils";
 
 @Component({
   selector: 'sc-album-layout',
@@ -18,12 +18,14 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
   currentlyPlayingInTrackList: boolean = false;
   currentlyPlayingTrack: Track;
   tracks: Track[] = [];
+  hasPreviews: boolean = true;
 
   constructor(private nowPlayingService: NowPlayingService, private backgroundService: MainBackgroundService) { }
 
   ngOnInit() {
     if(this.playlist) {
       this.playlist.tracks.items.forEach(track => this.tracks.push(track.track));
+      this.hasPreviews = checkForPreviews(this.tracks);
     } else if(this.album) {
       this.tracks = this.album.tracks.items;
       this.tracks.forEach(track => {
@@ -32,6 +34,7 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
           images: this.album.images
         }
       })
+      this.hasPreviews = checkForPreviews(this.tracks);
     }
 
     this.nowPlayingService.nowPlaying$.subscribe(nowPlaying => {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Album, Playlist, Track } from '../types/spotify-types';
 import { NowPlayingService, NowPlaying } from '../services/now-playing.service';
-import { removeTracksWithoutPreview } from "../core/utils";
+import { removeTracksWithoutPreview, checkForPreviews } from "../core/utils";
 import { SpotifyConnectService } from '../services/spotify.service';
 
 @Component({
@@ -17,13 +17,31 @@ export class AlbumPreviewComponent implements OnInit {
   currentlyPlayingFlag: boolean = false;
   currentlyPlayingInAlbum: boolean = false;
   playlistTracksList: Track[] = [];
+  hasPreviews: boolean = true;
 
   constructor(private nowPlayingService: NowPlayingService, private spotifyService: SpotifyConnectService) { }
 
   ngOnInit() {
     if(this.playlist) {
-      if(this.playlist.tracks.items) {
+      if(this.playlist.tracks && this.playlist.tracks.items) {
         this.convertPlaylistTracks();
+        this.hasPreviews = checkForPreviews(this.playlistTracksList);
+      } else {
+        this.spotifyService.getPlaylistById(this.playlist.id).subscribe(playlist => {
+          this.playlist = playlist;
+          this.convertPlaylistTracks();
+          this.hasPreviews = checkForPreviews(this.playlistTracksList);
+        })
+      }
+    }
+    if(this.album) {
+      if(this.album.tracks) {
+        this.hasPreviews = checkForPreviews(this.album.tracks.items);
+      } else {
+        this.spotifyService.getAlbumById(this.album.id).subscribe(album => {
+          this.album = album;
+          this.hasPreviews = checkForPreviews(this.album.tracks.items);
+        })
       }
     }
     this.nowPlayingService.nowPlaying$.subscribe((nowPlaying: NowPlaying) => {
@@ -82,4 +100,5 @@ export class AlbumPreviewComponent implements OnInit {
       }
     });
   }
+
 }

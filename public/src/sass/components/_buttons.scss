@@ -24,6 +24,12 @@ button {
         }
     }
 
+    &.no_previews {
+        background: $color-neutral;
+        color: $color-main;
+        cursor: not-allowed;
+    }
+
     &.transparent {
         background: none;
         color: $white;

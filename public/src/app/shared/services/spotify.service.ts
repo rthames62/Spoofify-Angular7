@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { map, throttle, throttleTime } from "rxjs/operators";
 import { MainBackgroundService } from './main-background.service';
 import { Album, Track } from '../types/spotify-types';
@@ -22,8 +22,26 @@ export class SpotifyConnectService {
     )
   }
 
+  getBrowseCategoryById(id: string): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/browse/category/${id}/playlists`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
+  getSingleCategoryById(id: string): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/browse/category/${id}`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
   getFeaturedPlaylists(): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/featured-playlists`).pipe(
+      map((res: any) => JSON.parse(res._body))
+    )
+  }
+
+  getNewReleases(): Observable<any> {
+    return this.http.get(`${environment.serverBaseUrl}/spotify/browse/new-releases`).pipe(
       map((res: any) => JSON.parse(res._body))
     )
   }
@@ -44,14 +62,12 @@ export class SpotifyConnectService {
     return this.http.get(`${environment.serverBaseUrl}/spotify/playlist/${id}`).pipe(
       map((res: any) => {
         let body = JSON.parse(res._body);
-        this.backgroundService.updateBackgroundColor(body.images[0].url);
         return body;
       })
     )
   }
 
   getArtistById(id: string): Observable<any> {
-    console.log(id);
     return this.http.get(`${environment.serverBaseUrl}/spotify/artist/${id}`).pipe(
       map((res: any) => JSON.parse(res._body))
     )
@@ -101,7 +117,6 @@ export class SpotifyConnectService {
 
   searchSpotify(q): Observable<any> {
     return this.http.get(`${environment.serverBaseUrl}/spotify/search/${q}`).pipe(
-      throttleTime(100),
       map((res: any) => JSON.parse(res._body))
     )
   }

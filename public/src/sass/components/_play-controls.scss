@@ -43,6 +43,13 @@
         }
     }
 
+    &--no_previews {
+        i {
+            font-size: 46px;
+            color: $white;
+        }
+    }
+
     .fa-pause {
         padding-left: 0 !important;
     }

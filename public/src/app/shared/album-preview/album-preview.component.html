@@ -4,8 +4,11 @@
         <div *ngIf="album" class="cover_art" [style.backgroundImage]="'url(' + album.images[0].url + ')'"></div>
         <div *ngIf="playlist" class="cover_art" [style.backgroundImage]="'url(' + playlist.images[0].url + ')'"></div>
         <div class="album--playback">
-          <div (click)="currentlyPlayingFlag && currentlyPlayingInAlbum ? pause() : play()" class="player_controls--play">
+          <div *ngIf="hasPreviews" (click)="currentlyPlayingFlag && currentlyPlayingInAlbum ? pause() : play()" class="player_controls--play">
               <i class="fas" [ngClass]="currentlyPlayingFlag && currentlyPlayingInAlbum ? 'fa-pause' : 'fa-play'"></i>
+          </div>
+          <div *ngIf="!hasPreviews" class="player_controls--no_previews">
+              <i class="fas fa-ban"></i>
           </div>
         </div>
     </div>

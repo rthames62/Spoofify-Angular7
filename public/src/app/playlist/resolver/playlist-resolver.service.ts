@@ -18,7 +18,7 @@ export class PlaylistResolverService implements ResolveData {
         if(playlist) {
           return of(playlist);
         } else {
-          this.router.navigate(['/browse/featured']);
+          this.router.navigate(['/browse']);
           return EMPTY;
         }
       })

@@ -18,7 +18,7 @@ export class TopResultsResolverService {
         if(results) {
           return of(results)
         } else {
-          this.router.navigate(['/browse/featured']);
+          this.router.navigate(['/browse']);
           return EMPTY;
         }
       })

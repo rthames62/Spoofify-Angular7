@@ -23,8 +23,11 @@
                 <p class="album_header--description">{{ playlist?.description }}</p>
                 <p class="album_header--amount">{{ tracks.length }} songs</p>
                 <div class="album_header--controls">
-                  <button (click)="currentlyPlayingFlag && currentlyPlayingInTrackList ? pause() : play()" class="play">
+                  <button *ngIf="hasPreviews" (click)="currentlyPlayingFlag && currentlyPlayingInTrackList ? pause() : play()" class="play">
                     {{ currentlyPlayingFlag && currentlyPlayingInTrackList ? 'Pause' : 'Play' }}
+                  </button>
+                  <button *ngIf="!hasPreviews" class="no_previews">
+                    No Preview
                   </button>
                 </div>
               </div>

@@ -1,6 +1,5 @@
 <nav class="browse">
-  <a routerLink="/browse/featured" routerLinkActive="active">Featured</a>
+  <a routerLink="/browse" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Featured</a>
   <a routerLink="/browse/genres" routerLinkActive="active">Genres & Moods</a>
   <a routerLink="/browse/new-releases" routerLinkActive="active">New Releases</a>
-  <a routerLink="/browse/discover" routerLinkActive="active">Discover</a>
 </nav>

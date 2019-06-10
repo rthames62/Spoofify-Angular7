@@ -15,7 +15,7 @@
             @include transition(.2s ease filter);
         }
 
-        .player_controls--play {
+        .player_controls--play, .player_controls--no_previews {
             display: block;
         }
     }
@@ -50,7 +50,7 @@
         height: auto;
     }
 
-    .player_controls--play {
+    .player_controls--play, .player_controls--no_previews {
         display: none;
     }
 

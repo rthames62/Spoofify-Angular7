@@ -14,8 +14,7 @@ export class GenresComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      console.log(data);
-      this.genres = data.genres.items;
+      this.genres = data.genres.categories.items;
     })
   }
 
