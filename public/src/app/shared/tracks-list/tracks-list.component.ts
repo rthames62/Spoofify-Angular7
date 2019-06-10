@@ -32,6 +32,7 @@ export class TracksListComponent implements OnInit, OnChanges {
       this.initTracksList();
     }
     this.nowPlayingService.nowPlaying$.subscribe(currentTrack => {
+      console.log(currentTrack);
       if(currentTrack.trackList) {
         if(this.tracksList) {
           this.tracksList.forEach(track => track.currentlyPlaying = track.id === currentTrack.track.id);
