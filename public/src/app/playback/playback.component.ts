@@ -53,7 +53,7 @@ export class PlaybackComponent implements OnInit {
           this.currentlyPlayingDurationDisplay = convertSecondsToMinutes(playingDuration);
           this.currentlyPlayingDurationSeconds = Math.floor(playingDuration);
           this.initTimer();
-        }, 200);
+        }, 500);
         
       }
     });

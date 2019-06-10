@@ -15,7 +15,7 @@ export interface NowPlaying {
 })
 export class NowPlayingService {
 
-  nowPlaying: BehaviorSubject<NowPlaying> = new BehaviorSubject<NowPlaying>({});
+  nowPlaying: BehaviorSubject<NowPlaying> = new BehaviorSubject<NowPlaying>({ track: null, trackList: null, idOfTracklist: null });
   nowPlaying$: Observable<NowPlaying> = this.nowPlaying.asObservable();
   currentlyPlaying: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentlyPlaying$: Observable<boolean> = this.currentlyPlaying.asObservable();

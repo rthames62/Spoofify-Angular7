@@ -32,10 +32,13 @@ export class TracksListComponent implements OnInit, OnChanges {
       this.initTracksList();
     }
     this.nowPlayingService.nowPlaying$.subscribe(currentTrack => {
-      console.log(currentTrack);
-      if(currentTrack.trackList) {
+      if(currentTrack && currentTrack.trackList) {
         if(this.tracksList) {
-          this.tracksList.forEach(track => track.currentlyPlaying = track.id === currentTrack.track.id);
+          this.tracksList.forEach(track => {
+            if(track) {
+              track.currentlyPlaying = track.id === currentTrack.track.id;
+            }
+          });
         }
       }
     })
@@ -64,6 +67,10 @@ export class TracksListComponent implements OnInit, OnChanges {
 
   private initTracksList(): void {
     this.tracksList = this.type === 'popular' ? this.tracksList.slice(0, 5) : this.tracksList;
-    this.tracksList.forEach(track => track.currentlyPlaying = false);
+    this.tracksList.forEach(track => {
+      if(track) {
+        track.currentlyPlaying = false;
+      }
+    });
   }
 }
