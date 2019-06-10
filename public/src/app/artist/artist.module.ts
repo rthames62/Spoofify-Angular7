@@ -9,10 +9,9 @@ import { RelatedArtistsComponent } from './related-artists/related-artists.compo
 import { RelatedArtistsResolverService } from './related-artists/resolver/related-artists-resolver.service';
 import { OverviewComponent } from './overview/overview.component';
 import { OverviewResolverService } from './overview/resolver/overview-resolver.service';
-import { AboutComponent } from './about/about.component';
 
 @NgModule({
-  declarations: [ ArtistComponent, RelatedArtistsComponent, OverviewComponent, AboutComponent ],
+  declarations: [ ArtistComponent, RelatedArtistsComponent, OverviewComponent ],
   imports: [
     CommonModule,
     TracksListModule,
@@ -38,14 +37,6 @@ import { AboutComponent } from './about/about.component';
             component: RelatedArtistsComponent,
             resolve: {
               artists: RelatedArtistsResolverService
-            },
-            outlet: 'artist'
-          },
-          {
-            path: 'about',
-            component: ArtistComponent,
-            resolve: {
-              artists: ArtistResolverService
             },
             outlet: 'artist'
           }
