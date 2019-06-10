@@ -16,7 +16,6 @@ export class GenreDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      console.log(data);
       this.genre = data.playlists[1];
       this.playlists = data.playlists[0].playlists.items;
     });

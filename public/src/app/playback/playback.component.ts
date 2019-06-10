@@ -93,7 +93,6 @@ export class PlaybackComponent implements OnInit {
     this.nowPlayingService.shuffleOn$.subscribe(val => this.shuffleOn = val);
     this.nowPlayingService.repeatOn$.subscribe(val => {
       this.repeatOn = val;
-      console.log(val);
     });
   }
 

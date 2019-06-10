@@ -57,7 +57,6 @@ export class AlbumLayoutComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   updateNowPlaying(track: Track): void {
-    console.log(this.playlist, this.album);
     this.nowPlayingService.updateNowPlaying(track, this.tracks, this.album ? this.album.id : this.playlist.id);
   }
 

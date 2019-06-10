@@ -43,7 +43,6 @@ export class ArtistComponent implements OnInit {
     if(this.currentlyPlayingArtist) {
       this.nowPlayingService.play();
     } else {
-      console.log(this.topTracks);
       const tracksWithAudio = removeTracksWithoutPreview(this.topTracks);
       this.nowPlayingService.updateNowPlaying(tracksWithAudio[0], tracksWithAudio, this.artist.id);
     }

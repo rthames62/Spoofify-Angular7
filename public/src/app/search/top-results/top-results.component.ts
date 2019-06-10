@@ -19,7 +19,6 @@ export class TopResultsComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      console.log(data);
       this.albums = data.results.albums.items;
       this.tracks = data.results.tracks.items.slice(0, 5);
       this.artists = data.results.artists.items;

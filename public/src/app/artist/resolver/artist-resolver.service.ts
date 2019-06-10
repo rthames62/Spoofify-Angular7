@@ -29,7 +29,6 @@ export class ArtistResolverService {
         take(1),
         mergeMap(tracks => {
           if(tracks) {
-            console.log(tracks);
             return of(tracks);
           } else {
             this.router.navigate(['/featured/browse']);

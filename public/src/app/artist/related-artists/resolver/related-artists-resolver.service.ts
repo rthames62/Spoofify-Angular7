@@ -15,7 +15,6 @@ export class RelatedArtistsResolverService implements ResolveData {
     return this.spotifySerfice.getArtistRelatedArtists(route.parent.params['id']).pipe(
       take(1),
       mergeMap(artists => {
-        console.log(artists);
         if(artists) {
           return of(artists);
         } else {

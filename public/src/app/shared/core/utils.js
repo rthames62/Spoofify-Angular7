@@ -115,7 +115,7 @@ export function imageReceived(cb) {
       localStorage.setItem("saved-cover-art", canvas.toDataURL("image/png"));
     }
     catch(err) {
-      console.log("Errorsd d sd: " + err);
+      console.log("Errors: " + err);
     }  
 }
 
