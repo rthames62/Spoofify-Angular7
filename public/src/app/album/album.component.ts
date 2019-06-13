@@ -16,7 +16,7 @@ export class AlbumComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.album = data.album;
-    })
+    });
   }
 
 }
