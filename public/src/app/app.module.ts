@@ -7,46 +7,6 @@ import { HttpModule } from '@angular/http';
 import { HeaderModule } from './header/header.module';
 import { SidebarNavigationModule } from './sidebar-navigation/sidebar-navigation.module';
 import { PlaybackModule } from './playback/playback.module';
-import { Routes, RouterModule } from '@angular/router';
-
-const routes: Routes = [
-  {
-    path: 'browse',
-    loadChildren: './browse/browse.module#BrowseModule',
-    data: {
-      preload: false
-    }
-  },
-  {
-    path: 'playlist',
-    loadChildren: './playlist/playlist.module#PlaylistModule',
-    data: {
-      preload: false
-    }
-  },
-  {
-    path: 'artist',
-    loadChildren: './artist/artist.module#ArtistModule',
-    data: {
-      preload: false
-    }
-  },
-  {
-    path: 'album',
-    loadChildren: './album/album.module#AlbumModule',
-    data: {
-      preload: false
-    }
-  },
-  {
-    path: 'search',
-    loadChildren: './search/search.module#SearchModule',
-    data: {
-      preload: false
-    }
-  },
-  { path: '', redirectTo: 'browse', pathMatch: 'full' }
-]
 
 @NgModule({
   declarations: [
@@ -58,8 +18,7 @@ const routes: Routes = [
     HttpModule,
     HeaderModule,
     SidebarNavigationModule,
-    PlaybackModule,
-    RouterModule.forRoot(routes)
+    PlaybackModule
   ],
   providers: [
     AppComponent

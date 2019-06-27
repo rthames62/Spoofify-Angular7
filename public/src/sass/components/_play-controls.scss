@@ -7,15 +7,15 @@
 
     &--play {
         @include transition(.2s ease transform);
-    
+
         &:hover {
-    
+
             i {
                 @include transform(scale(1.1));
                 border-color: $white;
             }
         }
-    
+
         i {
             @extend .flex-all-center;
             @include transition(.2s ease transform);
@@ -32,7 +32,7 @@
                 font-size: 32px;
             }
         }
-    
+
         &.small {
             i {
                 width: 35px;

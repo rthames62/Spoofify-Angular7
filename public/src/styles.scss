@@ -1,1 +1,117 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$Spoofify-primary: mat-palette($mat-indigo);
+$Spoofify-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$Spoofify-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$Spoofify-theme: mat-light-theme($Spoofify-primary, $Spoofify-accent, $Spoofify-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($Spoofify-theme);
+
 /* You can add global styles to this file, and also import other style files */
+
+@import './base/reset';
+@import "~bootstrap/scss/mixins/grid-framework";
+@import "~bootstrap/scss/mixins/grid";
+@import './output.scss';
+@import './base/fonts';
+
+body {
+    background: $color-main-semi-light;
+    color: $color-neutral;
+    font-family: 'Roboto', sans-serif;
+    font-weight: $weight-regular;
+    letter-spacing: .2px;
+}
+
+h1, h2, h3 {
+    font-weight: $weight-bold;
+    color: $white;
+    margin-bottom: 5px;
+}
+
+h1 {
+    font-size: 40px;
+    margin: 24px 0;
+
+    &.large {
+        font-size: 72px;
+    }
+}
+
+h2 {
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -.2px;
+}
+
+p, a, span {
+    font-size: 14px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    color: $white;
+    text-decoration: none;
+
+    &:hover {
+        color: inherit;
+    }
+
+    &.section--cta {
+        color: $color-neutral;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: $weight-regular;
+    }
+}
+
+.flex--wrapper {
+    @include flex();
+    flex-wrap: wrap;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.line_seperator {
+    padding: 0 5px;
+}
+
+.center {
+    text-align: center;
+}
+
+.copyright {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: .015em;
+    color: $white;
+    opacity: .6;
+    padding: 0 5%;
+    width: 70%;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

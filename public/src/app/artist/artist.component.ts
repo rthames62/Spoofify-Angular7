@@ -25,7 +25,7 @@ export class ArtistComponent implements OnInit {
     this.route.data.subscribe((data: any) => {
       this.artist = data.artistData[0];
       this.topTracks = data.artistData[1].tracks;
-      
+
       this.artistImage = this.setArtistImage(this.artist.images[0].url);
       this.resetArtistData();
 
